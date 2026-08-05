@@ -1,0 +1,239 @@
+﻿@model SandiqMVC.ViewModels.CreateListingViewModel
+
+@{
+    ViewData["Title"] = "Elan yerləşdir";
+}
+
+@if (User.Identity?.IsAuthenticated != true)
+{
+    <div class="post-ad-gate">
+        <h2 data-i18n="login_required_title">Elan yerləşdirmək üçün daxil olmalısan</h2>
+        <p data-i18n="login_required_text">Elan yerləşdirməzdən əvvəl hesabına daxil ol və ya qeydiyyatdan keç.</p>
+        <div class="post-ad-gate__actions">
+            <a asp-controller="Account" asp-action="Login" class="post-ad-btn" data-i18n="login_button_gate">Giriş et</a>
+            <a asp-controller="Account" asp-action="Register" class="post-ad-btn post-ad-btn--filled" data-i18n="register_link">Qeydiyyatdan keç</a>
+        </div>
+    </div>
+}
+else
+{
+    <form asp-action="Create" method="post" class="post-ad-form" id="postAdForm">
+        <div class="post-ad-form__header">
+            <div>
+                <h2 data-i18n="post_ad_title">Elan yerləşdir</h2>
+                <p data-i18n="post_ad_subtitle">Məhsulunuzu satışa çıxarmaq üçün aşağıdakı formu doldurun</p>
+            </div>
+            <button type="reset" class="post-ad-reset-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="1 4 1 10 7 10"></polyline>
+                    <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                </svg>
+                <span data-i18n="reset_form_button">Sıfırla</span>
+            </button>
+        </div>
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div asp-validation-summary="All" class="text-danger"></div>
+        }
+
+        <section class="post-ad-section">
+            <h3 class="post-ad-section__title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>
+                <span data-i18n="basic_info">Əsas məlumat</span>
+            </h3>
+            <label>
+                <span data-i18n="title_label">Başlıq</span>
+                <input asp-for="Title" data-i18n-placeholder="title_example" placeholder="Məs. Az işlənmiş dəri kreslo" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </label>
+            <label>
+                <span data-i18n="description_label">Təsvir</span>
+                <textarea asp-for="Description" rows="5" data-i18n-placeholder="description_example" placeholder="Məhsul haqqında ətraflı məlumat verin..."></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="post-ad-section">
+            <h3 class="post-ad-section__title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect></svg>
+                <span data-i18n="category_price_section">Kateqoriya və qiymət</span>
+            </h3>
+            <div class="post-ad-form__grid">
+                <label>
+                    <span data-i18n="category_label">Kateqoriya</span>
+                    <select asp-for="CategoryId" id="adCategory">
+                        <option value="" data-i18n="select_option">Seçin...</option>
+                        @foreach (var category in Model.Categories)
+                        {
+                            <option value="@category.Id" data-name-az="@category.Name" data-name-ru="@(category.NameRu ?? category.Name)" data-name-en="@(category.NameEn ?? category.Name)">@category.Name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </label>
+                <label>
+                    <span data-i18n="subcategory_label">Alt kateqoriya</span>
+                    <select asp-for="SubcategoryId" id="adSubcategory" disabled>
+                        <option value="" data-i18n="select_category_first">Əvvəlcə kateqoriya seçin</option>
+                    </select>
+                </label>
+                <label>
+                    <span data-i18n="price_label">Qiymət (₼)</span>
+                    <input asp-for="Price" placeholder="0" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </label>
+                <label>
+                    <span data-i18n="condition_label">Vəziyyəti</span>
+                    <select asp-for="Condition">
+                        <option value="new" data-i18n="condition_new">Yeni</option>
+                        <option value="used" data-i18n="condition_used">İşlənmiş</option>
+                    </select>
+                </label>
+                <label class="post-ad-form__full">
+                    <span data-i18n="location_label">Yerləşdiyi yer</span>
+                    <input asp-for="Location" data-i18n-placeholder="location_example" placeholder="Məs. Bakı, Nəsimi" />
+                </label>
+            </div>
+        </section>
+
+        <section class="post-ad-section">
+            <h3 class="post-ad-section__title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg>
+                <span data-i18n="images_label">Şəkillər</span>
+            </h3>
+            <div class="post-ad-dropzone" id="dropzone">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                <p><span data-i18n="drag_drop_text">Şəkilləri bura sürüşdürün və ya</span> <span class="post-ad-dropzone__link" data-i18n="click_to_select">seçmək üçün klikləyin</span></p>
+                <input type="file" id="adImages" accept="image/*" multiple hidden />
+            </div>
+            <div class="post-ad-previews" id="imagePreviews"></div>
+        </section>
+
+        <label class="post-ad-form__checkbox">
+            <input asp-for="AcceptTerms" />
+            <span><span data-i18n="accept_terms">Elan paylaşma</span> <span data-i18n="terms_link">şərtlərini</span> <span data-i18n="accept_terms_end">qəbul edirəm</span></span>
+        </label>
+        <span asp-validation-for="AcceptTerms" class="text-danger d-block"></span>
+
+        <button type="submit" data-i18n="submit_ad_button">Elanı göndər</button>
+    </form>
+
+    <div id="termsModalOverlay" class="terms-modal-overlay hidden">
+        <div class="terms-modal">
+            <h3 data-i18n="legal_adterms_title">Elan paylaşma şərtləri</h3>
+            <div class="terms-modal__body">
+                <p data-i18n="legal_adterms_text">Elan yerləşdirməklə, məhsulun sizə məxsus olduğunu və satışının qanunla qadağan olunmadığını təsdiqləyirsiniz. Elanda göstərilən şəkil və təsvir məhsulun real vəziyyətinə uyğun olmalıdır, yanıldıcı məlumat verilməməlidir. Silah, narkotik, saxta sənəd və qanunla qadağan olunmuş digər məhsulların satışı qəti qadağandır. Elanınız admin tərəfindən yoxlanıldıqdan sonra saytda dərc olunacaq. Elan paylaşaraq, Oferta müqaviləsi şərtlərini də qəbul etmiş sayılırsınız.</p>
+            </div>
+            <button type="button" id="acceptTermsBtn" class="post-ad-btn post-ad-btn--filled" data-i18n="accept_terms_end">Qəbul edirəm</button>
+        </div>
+    </div>
+
+    @section Scripts {
+        <script type="module">
+            import { t, getLang } from "/assets/js/i18n-utils.js";
+
+            const categoriesData = @Json.Serialize(Model.Categories.Select(c => new { id = c.Id, name = c.Name, nameRu = c.NameRu ?? c.Name, nameEn = c.NameEn ?? c.Name, subcategories = c.Subcategories.Select(s => new { id = s.Id, name = s.Name, nameRu = s.NameRu ?? s.Name, nameEn = s.NameEn ?? s.Name }) }));
+
+            function localName(item) {
+                const lang = getLang();
+                if (lang === "ru") return item.nameRu;
+                if (lang === "en") return item.nameEn;
+                return item.name;
+            }
+
+            const categorySelect = document.getElementById("adCategory");
+            const subcategorySelect = document.getElementById("adSubcategory");
+
+            categorySelect.addEventListener("change", () => {
+                const selected = categoriesData.find((c) => String(c.id) === categorySelect.value);
+                const subcats = selected?.subcategories ?? [];
+                subcategorySelect.disabled = subcats.length === 0;
+                subcategorySelect.innerHTML =
+                    `<option value="">${t("select_option")}</option>` +
+                    subcats.map((sub) => `<option value="${sub.id}">${localName(sub)}</option>`).join("");
+            });
+
+            const dropzone = document.getElementById("dropzone");
+            const fileInput = document.getElementById("adImages");
+            const previewsEl = document.getElementById("imagePreviews");
+            let selectedFiles = [];
+
+            dropzone.addEventListener("click", () => fileInput.click());
+
+            dropzone.addEventListener("dragover", (e) => {
+                e.preventDefault();
+                dropzone.classList.add("dragover");
+            });
+
+            dropzone.addEventListener("dragleave", () => {
+                dropzone.classList.remove("dragover");
+            });
+
+            dropzone.addEventListener("drop", (e) => {
+                e.preventDefault();
+                dropzone.classList.remove("dragover");
+                addFiles(Array.from(e.dataTransfer.files));
+            });
+
+            fileInput.addEventListener("change", () => {
+                addFiles(Array.from(fileInput.files));
+            });
+
+            function addFiles(files) {
+                const imageFiles = files.filter((f) => f.type.startsWith("image/"));
+                selectedFiles = [...selectedFiles, ...imageFiles];
+                renderPreviews();
+            }
+
+            function renderPreviews() {
+                previewsEl.innerHTML = "";
+                selectedFiles.forEach((file, index) => {
+                    const url = URL.createObjectURL(file);
+                    const item = document.createElement("div");
+                    item.className = "post-ad-preview";
+                    item.innerHTML = `
+                            <img src="${url}" alt="${file.name}" />
+                            <button type="button" class="post-ad-preview__remove" data-index="${index}">×</button>
+                          `;
+                    previewsEl.appendChild(item);
+                });
+
+                previewsEl.querySelectorAll(".post-ad-preview__remove").forEach((btn) => {
+                    btn.addEventListener("click", () => {
+                        const index = Number(btn.dataset.index);
+                        selectedFiles.splice(index, 1);
+                        renderPreviews();
+                    });
+                });
+            }
+
+            (function () {
+                const termsCheckbox = document.getElementById("AcceptTerms");
+                const overlay = document.getElementById("termsModalOverlay");
+                const acceptBtn = document.getElementById("acceptTermsBtn");
+                const form = termsCheckbox.closest("form");
+
+                termsCheckbox.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    overlay.classList.remove("hidden");
+                });
+
+                acceptBtn.addEventListener("click", () => {
+                    termsCheckbox.checked = true;
+                    overlay.classList.add("hidden");
+                });
+
+                overlay.addEventListener("click", (e) => {
+                    if (e.target === overlay) overlay.classList.add("hidden");
+                });
+
+                form.addEventListener("submit", (e) => {
+                    if (!termsCheckbox.checked) {
+                        e.preventDefault();
+                        overlay.classList.remove("hidden");
+                    }
+                });
+            })();
+        </script>
+    }
+}

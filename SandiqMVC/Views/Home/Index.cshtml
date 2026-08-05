@@ -1,0 +1,32 @@
+﻿@model SandiqMVC.ViewModels.HomeViewModel
+
+@{
+    ViewData["Title"] = "Ana səhifə";
+}
+
+<section class="categories-section">
+    <h2 data-i18n="home_categories">Kateqoriyalar</h2>
+    <div class="home-category-grid">
+        @foreach (var category in Model.Categories)
+        {
+            <a href="/Category/Index/@category.Id" class="home-category-card">
+                <div class="home-category-card__icon">🗂️</div>
+                <span data-name-az="@category.Name" data-name-ru="@(category.NameRu ?? category.Name)" data-name-en="@(category.NameEn ?? category.Name)">@category.Name</span>
+            </a>
+        }
+    </div>
+</section>
+
+<section class="products-section">
+    <h2 data-i18n="home_all_listings">Bütün Elanlar</h2>
+    <div class="product-grid">
+        @if (!Model.Products.Any())
+        {
+            <p data-i18n="no_products_found">Hələ heç bir elan yoxdur.</p>
+        }
+        @foreach (var product in Model.Products)
+        {
+            <partial name="_ProductCard" model="product" />
+        }
+    </div>
+</section>

@@ -1,0 +1,61 @@
+﻿@model SandiqMVC.Models.Product
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="product-detail" data-id="@Model.Id" data-title="@Model.Title" data-price="@Model.Price">
+    <div class="product-detail__image">
+        <div style="width:100%;aspect-ratio:1/1;background:#EFE6D6;border-radius:8px;"></div>
+    </div>
+    <div class="product-detail__info">
+        <h1>@Model.Title</h1>
+        <p class="product-detail__price">@Model.Price.ToString("N0") ₼</p>
+        <p class="product-detail__description">@Model.Description</p>
+        <ul class="list-unstyled">
+            <li><strong data-i18n="detail_category_label">Kateqoriya:</strong> <span data-name-az="@Model.Category?.Name" data-name-ru="@(Model.Category?.NameRu ?? Model.Category?.Name)" data-name-en="@(Model.Category?.NameEn ?? Model.Category?.Name)">@Model.Category?.Name</span></li>
+            <li><strong data-i18n="detail_condition_label">Vəziyyət:</strong> <span data-i18n="@(Model.Condition == "new" ? "condition_new" : "condition_used")">@(Model.Condition == "new" ? "Yeni" : "İşlənmiş")</span></li>
+            <li><strong data-i18n="detail_location_label">Yer:</strong> @Model.Location</li>
+            <li><strong data-i18n="detail_seller_label">Satıcı:</strong> @Model.SubmittedBy?.FullName</li>
+            @if (Model.ApprovedAt.HasValue)
+            {
+                <li><strong data-i18n="detail_approved_at_label">Təsdiqlənmə tarixi:</strong> @Model.ApprovedAt.Value.AddHours(4).ToString("dd.MM.yyyy HH:mm")</li>
+            }
+        </ul>
+        <div class="product-detail__actions">
+            <button type="button" id="detailCartBtn" data-i18n="add_to_cart">Səbətə at</button>
+            <button type="button" id="detailFavBtn">♥ <span data-i18n="add_to_favorites">Favorilərə əlavə et</span></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="module">
+        import { t } from "/assets/js/i18n-utils.js";
+
+        (function () {
+            const container = document.querySelector(".product-detail");
+            const product = {
+                id: Number(container.dataset.id),
+                title: container.dataset.title,
+                price: Number(container.dataset.price),
+                image: null,
+            };
+
+            const favBtn = document.getElementById("detailFavBtn");
+            if (isFavorite(product.id)) favBtn.classList.add("active");
+
+            document.getElementById("detailCartBtn").addEventListener("click", () => {
+                addToCart(product);
+                updateHeaderBadges();
+                showToast(t("cart_added_alert"));
+            });
+
+            favBtn.addEventListener("click", () => {
+                toggleFavorite(product);
+                favBtn.classList.toggle("active");
+                updateHeaderBadges();
+            });
+        })();
+    </script>
+}

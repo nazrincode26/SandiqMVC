@@ -1,0 +1,52 @@
+﻿@model SandiqMVC.ViewModels.CategoryPageViewModel
+
+@{
+    ViewData["Title"] = Model.Category.Name;
+}
+
+<h2 id="categoryTitle" data-name-az="@Model.Category.Name" data-name-ru="@(Model.Category.NameRu ?? Model.Category.Name)" data-name-en="@(Model.Category.NameEn ?? Model.Category.Name)">@Model.Category.Name</h2>
+
+<form method="get" class="filter-bar">
+    <input type="hidden" name="q" value="@Context.Request.Query["q"]" />
+
+    <div class="filter-bar__group">
+        <label data-i18n="filter_price_label">Qiymət</label>
+        <div class="filter-bar__price-row">
+            <input type="number" name="minPrice" data-i18n-placeholder="filter_min_price" placeholder="Min" min="0" value="@Context.Request.Query["minPrice"]" />
+            <span>-</span>
+            <input type="number" name="maxPrice" data-i18n-placeholder="filter_max_price" placeholder="Max" min="0" value="@Context.Request.Query["maxPrice"]" />
+        </div>
+    </div>
+
+    <div class="filter-bar__group">
+        <label data-i18n="filter_condition_label">Vəziyyət</label>
+        <select name="condition">
+            <option value="" data-i18n="filter_all_conditions">Hamısı</option>
+            <option value="new" data-i18n="condition_new" selected="@(Context.Request.Query["condition"] == "new" ? "selected" : null)">Yeni</option>
+            <option value="used" data-i18n="condition_used" selected="@(Context.Request.Query["condition"] == "used" ? "selected" : null)">İşlənmiş</option>
+        </select>
+    </div>
+
+    <div class="filter-bar__group">
+        <label data-i18n="filter_sort_label">Sırala</label>
+        <select name="sort">
+            <option value="newest" data-i18n="sort_newest">Ən yeni</option>
+            <option value="oldest" data-i18n="sort_oldest" selected="@(Context.Request.Query["sort"] == "oldest" ? "selected" : null)">Ən köhnə</option>
+            <option value="price_asc" data-i18n="sort_price_asc" selected="@(Context.Request.Query["sort"] == "price_asc" ? "selected" : null)">Qiymət: ucuzdan bahaya</option>
+            <option value="price_desc" data-i18n="sort_price_desc" selected="@(Context.Request.Query["sort"] == "price_desc" ? "selected" : null)">Qiymət: bahadan ucuza</option>
+        </select>
+    </div>
+
+    <button type="submit" class="post-ad-btn post-ad-btn--filled" data-i18n="apply_filters_button">Tətbiq et</button>
+</form>
+
+<div class="product-grid">
+    @if (!Model.Products.Any())
+    {
+        <p data-i18n="no_products_found">Bu kateqoriyada elan yoxdur.</p>
+    }
+    @foreach (var product in Model.Products)
+    {
+        <partial name="_ProductCard" model="product" />
+    }
+</div>

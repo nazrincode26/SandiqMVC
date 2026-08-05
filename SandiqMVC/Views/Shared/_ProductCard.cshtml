@@ -1,0 +1,17 @@
+﻿@model SandiqMVC.Models.Product
+
+<div class="product-card" data-id="@Model.Id" data-title="@Model.Title" data-price="@Model.Price">
+    <div class="product-card__image">
+        <a href="/Product/Details/@Model.Id" style="display:block;width:100%;height:100%;">
+            <div style="width:100%;height:100%;background:#EFE6D6;"></div>
+        </a>
+        <button type="button" class="product-card__favorite js-favorite-btn" aria-label="Favorilərə əlavə et">♥</button>
+    </div>
+    <div class="product-card__body">
+        <a href="/Product/Details/@Model.Id" style="text-decoration:none;color:inherit;">
+            <h3 class="product-card__title">@Model.Title</h3>
+            <p class="product-card__price">@Model.Price.ToString("N0") ₼</p>
+        </a>
+        <button type="button" class="product-card__cart-btn js-cart-btn" data-i18n="add_to_cart">Səbətə at</button>
+    </div>
+</div>

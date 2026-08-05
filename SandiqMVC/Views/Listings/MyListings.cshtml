@@ -1,0 +1,47 @@
+﻿@model List<SandiqMVC.Models.Product>
+
+@{
+    ViewData["Title"] = "Mənim elanlarım";
+}
+
+<div class="my-listings__header">
+    <h2 data-i18n="my_listings_title">Mənim elanlarım</h2>
+    <a asp-action="Create" class="post-ad-btn post-ad-btn--filled" data-i18n="new_ad_button">+ Yeni elan</a>
+</div>
+
+<div class="my-listings__list">
+    @if (!Model.Any())
+    {
+        <p data-i18n="no_listings">Hələ heç bir elan yerləşdirməmisən.</p>
+    }
+    @foreach (var listing in Model)
+    {
+        var statusClass = listing.Status switch
+        {
+            "approved" => "status--approved",
+            "rejected" => "status--rejected",
+            _ => "status--pending"
+        };
+        var statusKey = listing.Status switch
+        {
+            "approved" => "status_approved",
+            "rejected" => "status_rejected",
+            _ => "status_pending"
+        };
+        var statusLabel = listing.Status switch
+        {
+            "approved" => "Təsdiqləndi",
+            "rejected" => "Rədd edildi",
+            _ => "Gözləyir"
+        };
+
+        <div class="my-listing-row">
+            <div style="width:70px;height:70px;background:#EFE6D6;border-radius:8px;"></div>
+            <div class="my-listing-row__info">
+                <h3>@listing.Title</h3>
+                <p>@listing.Price.ToString("N0") ₼</p>
+            </div>
+            <span class="status-badge @statusClass" data-i18n="@statusKey">@statusLabel</span>
+        </div>
+    }
+</div>

@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin - Sandıq</title>
+    <link rel="icon" type="image/png" href="~/assets/images/logo.png" />
+    <link rel="stylesheet" href="~/admin/css/style.css" />
+</head>
+<body>
+    <header id="header">
+        <div class="admin-header__container">
+            <a asp-area="Admin" asp-controller="Listings" asp-action="Index" class="admin-header__logo">Sandıq <span>Admin</span></a>
+            <nav class="admin-header__nav">
+                <a asp-area="Admin" asp-controller="Listings" asp-action="Index">Gözləyən elanlar</a>
+                <a asp-area="Admin" asp-controller="Listings" asp-action="AllListings">Bütün elanlar</a>
+                <a asp-area="Admin" asp-controller="Categories" asp-action="Index">Kateqoriyalar</a>
+                <a asp-controller="Account" asp-action="Logout">Çıxış</a>
+            </nav>
+        </div>
+        <div class="header-flower header-flower--left">
+            <svg class="flower-svg" width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                <line x1="20" y1="0" x2="20" y2="12" stroke="#7A8B5C" stroke-width="2" />
+                <g transform="translate(20,22)">
+                    <ellipse cx="0" cy="-8" rx="3" ry="9" fill="#FFFFFF" stroke="#E5DCC8" stroke-width="0.5" transform="rotate(0)" />
+                    <ellipse cx="0" cy="-8" rx="3" ry="9" fill="#FFFFFF" stroke="#E5DCC8" stroke-width="0.5" transform="rotate(45)" />
+                    <ellipse cx="0" cy="-8" rx="3" ry="9" fill="#FFFFFF" stroke="#E5DCC8" stroke-width="0.5" transform="rotate(90)" />
+                    <ellipse cx="0" cy="-8" rx="3" ry="9" fill="#FFFFFF" stroke="#E5DCC8" stroke-width="0.5" transform="rotate(135)" />
+                    <ellipse cx="0" cy="-8" rx="3" ry="9" fill="#FFFFFF" stroke="#E5DCC8" stroke-width="0.5" transform="rotate(180)" />
+                    <ellipse cx="0" cy="-8" rx="3" ry="9" fill="#FFFFFF" stroke="#E5DCC8" stroke-width="0.5" transform="rotate(225)" />
+                    <ellipse cx="0" cy="-8" rx="3" ry="9" fill="#FFFFFF" stroke="#E5DCC8" stroke-width="0.5" transform="rotate(270)" />
+                    <ellipse cx="0" cy="-8" rx="3" ry="9" fill="#FFFFFF" stroke="#E5DCC8" stroke-width="0.5" transform="rotate(315)" />
+                    <circle cx="0" cy="0" r="5" fill="#F4C542" />
+                    <circle cx="0" cy="0" r="5" fill="none" stroke="#D9A62E" stroke-width="0.5" />
+                </g>
+            </svg>
+            <svg class="bee-icon" width="16" height="12" viewBox="0 0 16 12" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="8" cy="6" rx="6" ry="4" fill="#F4C542" />
+                <path d="M4 4 Q8 2, 12 4" stroke="#3D2B1E" stroke-width="1.5" fill="none" />
+                <path d="M4 6 Q8 8, 12 6" stroke="#3D2B1E" stroke-width="1.5" fill="none" />
+                <ellipse cx="3" cy="3" rx="3" ry="2" fill="#FFFFFF" opacity="0.6" transform="rotate(-20 3 3)" />
+                <ellipse cx="4" cy="8" rx="3" ry="2" fill="#FFFFFF" opacity="0.6" transform="rotate(20 4 8)" />
+            </svg>
+        </div>
+        <div class="header-flower header-flower--right">
+            <svg class="flower-svg" width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                <line x1="20" y1="0" x2="20" y2="12" stroke="#7A8B5C" stroke-width="2" />
+                <g transform="translate(20,22)">
+                    <ellipse cx="0" cy="-8" rx="3" ry="9" fill="#FFFFFF" stroke="#E5DCC8" stroke-width="0.5" transform="rotate(0)" />
+                    <ellipse cx="0" cy="-8" rx="3" ry="9" fill="#FFFFFF" stroke="#E5DCC8" stroke-width="0.5" transform="rotate(45)" />
+                    <ellipse cx="0" cy="-8" rx="3" ry="9" fill="#FFFFFF" stroke="#E5DCC8" stroke-width="0.5" transform="rotate(90)" />
+                    <ellipse cx="0" cy="-8" rx="3" ry="9" fill="#FFFFFF" stroke="#E5DCC8" stroke-width="0.5" transform="rotate(135)" />
+                    <ellipse cx="0" cy="-8" rx="3" ry="9" fill="#FFFFFF" stroke="#E5DCC8" stroke-width="0.5" transform="rotate(180)" />
+                    <ellipse cx="0" cy="-8" rx="3" ry="9" fill="#FFFFFF" stroke="#E5DCC8" stroke-width="0.5" transform="rotate(225)" />
+                    <ellipse cx="0" cy="-8" rx="3" ry="9" fill="#FFFFFF" stroke="#E5DCC8" stroke-width="0.5" transform="rotate(270)" />
+                    <ellipse cx="0" cy="-8" rx="3" ry="9" fill="#FFFFFF" stroke="#E5DCC8" stroke-width="0.5" transform="rotate(315)" />
+                    <circle cx="0" cy="0" r="5" fill="#F4C542" />
+                    <circle cx="0" cy="0" r="5" fill="none" stroke="#D9A62E" stroke-width="0.5" />
+                </g>
+            </svg>
+            <svg class="bee-icon" width="16" height="12" viewBox="0 0 16 12" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="8" cy="6" rx="6" ry="4" fill="#F4C542" />
+                <path d="M4 4 Q8 2, 12 4" stroke="#3D2B1E" stroke-width="1.5" fill="none" />
+                <path d="M4 6 Q8 8, 12 6" stroke="#3D2B1E" stroke-width="1.5" fill="none" />
+                <ellipse cx="3" cy="3" rx="3" ry="2" fill="#FFFFFF" opacity="0.6" transform="rotate(-20 3 3)" />
+                <ellipse cx="4" cy="8" rx="3" ry="2" fill="#FFFFFF" opacity="0.6" transform="rotate(20 4 8)" />
+            </svg>
+        </div>
+    </header>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

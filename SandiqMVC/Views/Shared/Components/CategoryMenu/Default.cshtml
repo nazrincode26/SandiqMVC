@@ -1,0 +1,32 @@
+﻿@model List<SandiqMVC.Models.Category>
+
+<div class="mega-menu__categories">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <div class="mega-menu__cat-item @(i == 0 ? "active" : "")" data-index="@i">
+            <span data-name-az="@Model[i].Name" data-name-ru="@(Model[i].NameRu ?? Model[i].Name)" data-name-en="@(Model[i].NameEn ?? Model[i].Name)">@Model[i].Name</span>
+            <span class="side-menu__arrow">›</span>
+        </div>
+    }
+</div>
+<div class="mega-menu__content">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <div class="mega-menu__content-panel" data-index="@i" style="@(i == 0 ? "" : "display:none;")">
+            @if (Model[i].Subcategories != null && Model[i].Subcategories.Any())
+            {
+                <h3 data-name-az="@Model[i].Name" data-name-ru="@(Model[i].NameRu ?? Model[i].Name)" data-name-en="@(Model[i].NameEn ?? Model[i].Name)">@Model[i].Name</h3>
+                <div class="mega-menu__subgrid">
+                    @foreach (var sub in Model[i].Subcategories)
+                    {
+                        <a href="/Category/Index/@sub.Id" data-name-az="@sub.Name" data-name-ru="@(sub.NameRu ?? sub.Name)" data-name-en="@(sub.NameEn ?? sub.Name)">@sub.Name</a>
+                    }
+                </div>
+            }
+            else
+            {
+                <p data-i18n="no_subcategories">Alt kateqoriya yoxdur.</p>
+            }
+        </div>
+    }
+</div>

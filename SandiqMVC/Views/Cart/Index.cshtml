@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Səbətim";
+}
+
+<h2 data-i18n="cart_title">Səbətim</h2>
+<div id="cartItems" class="cart-items"></div>
+<div id="cartTotal" class="cart-total"></div>
+
+@section Scripts {
+    <script type="module">
+        import { t } from "/assets/js/i18n-utils.js";
+
+        function renderCartPage() {
+            const itemsEl = document.getElementById("cartItems");
+            const totalEl = document.getElementById("cartTotal");
+            const items = getCart();
+
+            if (items.length === 0) {
+                itemsEl.innerHTML = `<p>${t("cart_empty")}</p>`;
+                totalEl.innerHTML = "";
+                return;
+            }
+
+            itemsEl.innerHTML = items
+                .map(
+                    (item) => `
+                  <div class="cart-item" data-id="${item.productId}">
+                    <div style="width:80px;height:80px;background:#EFE6D6;border-radius:8px;"></div>
+                    <div class="cart-item__info">
+                      <h3>${item.title}</h3>
+                      <p>${formatPrice(item.price)}</p>
+                    </div>
+                    <input type="number" class="cart-item__qty" min="1" value="${item.quantity}" />
+                    <button class="cart-item__remove">${t("remove_button")}</button>
+                  </div>
+                `
+                )
+                .join("");
+
+            totalEl.innerHTML = `<strong>${t("cart_total")}: ${formatPrice(getCartTotal())}</strong>`;
+
+            itemsEl.querySelectorAll(".cart-item__qty").forEach((input) => {
+                input.addEventListener("change", (e) => {
+                    const id = Number(e.target.closest(".cart-item").dataset.id);
+                    updateQuantity(id, Number(e.target.value));
+                    renderCartPage();
+                    updateHeaderBadges();
+                });
+            });
+
+            itemsEl.querySelectorAll(".cart-item__remove").forEach((btn) => {
+                btn.addEventListener("click", (e) => {
+                    const id = Number(e.target.closest(".cart-item").dataset.id);
+                    removeFromCart(id);
+                    renderCartPage();
+                    updateHeaderBadges();
+                });
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", renderCartPage);
+    </script>
+}

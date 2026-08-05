@@ -1,0 +1,123 @@
+.product-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.product-card:hover {
+  box-shadow: 0 4px 12px rgba(61, 43, 30, 0.15);
+  transform: translateY(-2px);
+}
+
+.product-card__image {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: #EFE6D6;
+}
+
+.product-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-card__favorite {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 252, 246, 0.9);
+  font-size: 16px;
+  color: #B5A896;
+}
+
+.product-card__favorite.active {
+  color: var(--color-danger);
+}
+
+.product-card__body {
+  padding: 12px;
+}
+
+.product-card__title {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--color-text);
+}
+
+.product-card__price {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 10px;
+}
+
+.product-card__cart-btn {
+  width: 100%;
+  padding: 8px;
+  background: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.product-card__cart-btn:hover {
+  background: var(--color-primary-dark);
+}
+
+.category-menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.category-menu__item {
+  position: relative;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 10px 16px;
+}
+
+.category-menu__item:hover .category-menu__submenu {
+  display: flex;
+}
+
+.category-menu__submenu {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  min-width: 160px;
+  padding: 8px;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(61, 43, 30, 0.15);
+}
+
+.category-menu__submenu a {
+  padding: 6px 8px;
+  font-size: 13px;
+  border-radius: 4px;
+  color: var(--color-text);
+}
+
+.category-menu__submenu a:hover {
+  background: #EFE6D6;
+}

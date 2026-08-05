@@ -1,0 +1,66 @@
+﻿@model SandiqMVC.ViewModels.RegisterViewModel
+@inject IConfiguration Configuration
+
+@{
+    ViewData["Title"] = "Qeydiyyat";
+    Layout = "_Layout";
+}
+
+<main class="auth-page">
+    <h2 data-i18n="register_title">Qeydiyyat</h2>
+    <form asp-action="Register" method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <input asp-for="FullName" data-i18n-placeholder="fullname_placeholder" placeholder="Ad Soyad" />
+        <input asp-for="Email" data-i18n-placeholder="email_placeholder" placeholder="E-poçt" />
+        <input asp-for="Phone" data-i18n-placeholder="phone_placeholder" placeholder="Telefon nömrəsi" />
+        <input asp-for="Password" data-i18n-placeholder="password_placeholder" placeholder="Şifrə" />
+        <button type="submit" data-i18n="register_button">Qeydiyyatdan keç</button>
+    </form>
+    <div class="auth-divider"><span data-i18n="or_divider">və ya</span></div>
+    <div id="googleSignInBtn" class="google-signin-btn"></div>
+    <p><span data-i18n="have_account">Artıq hesabın var?</span> <a asp-action="Login" data-i18n="login_link">Daxil ol</a></p>
+</main>
+
+@section Scripts {
+    <script type="module">
+        import { getLang } from "/assets/js/i18n-utils.js";
+
+        function loadGoogleScript(locale) {
+            return new Promise((resolve) => {
+                const script = document.createElement("script");
+                script.src = `https://accounts.google.com/gsi/client?hl=${locale}`;
+                script.async = true;
+                script.defer = true;
+                script.onload = resolve;
+                document.head.appendChild(script);
+            });
+        }
+
+        loadGoogleScript(getLang()).then(() => {
+            google.accounts.id.initialize({
+                client_id: "@Configuration["Google:ClientId"]",
+                callback: handleGoogleResponse,
+            });
+            google.accounts.id.renderButton(document.getElementById("googleSignInBtn"), {
+                theme: "outline",
+                size: "large",
+                width: "100%",
+            });
+        });
+
+        async function handleGoogleResponse(response) {
+            try {
+                const res = await fetch("/Account/GoogleLogin", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ credential: response.credential }),
+                });
+                if (!res.ok) throw new Error("Google login failed");
+                const data = await res.json();
+                window.location.href = data.needsPhone ? "/Account/CompleteProfile" : "/";
+            } catch (error) {
+                console.error("Google ilə qeydiyyat uğursuz oldu:", error);
+            }
+        }
+    </script>
+}
