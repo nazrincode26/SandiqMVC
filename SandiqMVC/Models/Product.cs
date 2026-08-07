@@ -21,4 +21,6 @@ public class Product
     public string Status { get; set; } = "pending";
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? ApprovedAt { get; set; }
+    public int ViewCount { get; set; }
+    public List<ProductReview> Reviews { get; set; } = new();
 }

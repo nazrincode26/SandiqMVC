@@ -37,10 +37,11 @@ header {
   font-size: 14px;
 }
 
-.header__search input:focus {
-  outline: none;
-  border-color: var(--color-primary, #8B5A34);
-}
+    .header__search input:focus {
+        outline: none;
+        border-color: var(--color-primary, #8B5A34);
+        box-shadow: var(--focus-ring, 0 0 0 3px rgba(139, 90, 52, 0.18));
+    }
 
 .header__search button {
   padding: 0 16px;

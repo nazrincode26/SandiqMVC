@@ -9,14 +9,10 @@ namespace SandiqMVC
     {
         public static void Main(string[] args)
         {
-            // Microsoft.Data.SqlClient's newer managed networking implementation has
-            // compatibility issues auto-starting/connecting to LocalDB on Windows.
-            // Force the older native networking path, which resolves it reliably.
             AppContext.SetSwitch("Switch.Microsoft.Data.SqlClient.UseManagedNetworkingOnWindows", false);
 
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.Configure<Microsoft.AspNetCore.Routing.RouteOptions>(options => options.LowercaseUrls = true);
 
@@ -24,17 +20,39 @@ namespace SandiqMVC
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddScoped<EmailService>();
+            builder.Services.AddHttpClient();
 
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
                     options.LoginPath = "/Account/Login";
                     options.AccessDeniedPath = "/Account/Login";
+
+                    options.Events = new CookieAuthenticationEvents
+                    {
+                        OnRedirectToLogin = context =>
+                        {
+                            var path = context.Request.Path;
+                            var redirectUri = path.StartsWithSegments("/admin", StringComparison.OrdinalIgnoreCase)
+                                ? $"/Admin/Account/Login?returnUrl={Uri.EscapeDataString(path + context.Request.QueryString)}"
+                                : context.RedirectUri;
+                            context.Response.Redirect(redirectUri);
+                            return Task.CompletedTask;
+                        },
+                        OnRedirectToAccessDenied = context =>
+                        {
+                            var path = context.Request.Path;
+                            var redirectUri = path.StartsWithSegments("/admin", StringComparison.OrdinalIgnoreCase)
+                                ? "/Admin/Account/Login"
+                                : context.RedirectUri;
+                            context.Response.Redirect(redirectUri);
+                            return Task.CompletedTask;
+                        }
+                    };
                 });
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");

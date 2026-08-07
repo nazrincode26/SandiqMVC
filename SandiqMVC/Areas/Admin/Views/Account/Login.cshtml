@@ -1,0 +1,47 @@
+﻿@model SandiqMVC.ViewModels.LoginViewModel
+@{
+    Layout = null;
+    ViewData["Title"] = "Admin Girişi";
+}
+
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Sandıq</title>
+    <link rel="icon" type="image/png" href="~/assets/images/logo.png" />
+    <link rel="stylesheet" href="~/admin/css/style.css" />
+</head>
+<body>
+    <div class="admin-login">
+        <div class="admin-login__box">
+            @if (ViewBag.AccessDenied == true)
+            {
+                <h2>Giriş qadağandır <span>Admin</span></h2>
+                <p style="text-align:center;margin-bottom:16px;">Bu hesabın admin panelinə giriş icazəsi yoxdur.</p>
+                <form asp-controller="Account" asp-action="Logout" asp-area="" method="post">
+                    <button type="submit">Çıxış et və başqa hesabla daxil ol</button>
+                </form>
+            }
+            else
+            {
+                <h2>Sandıq <span>Admin</span></h2>
+
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <form asp-action="Login" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+                    <input asp-for="Email" placeholder="E-poçt" />
+                    <span asp-validation-for="Email" class="field-validation-error"></span>
+                    <input asp-for="Password" placeholder="Şifrə" />
+                    <span asp-validation-for="Password" class="field-validation-error"></span>
+                    <button type="submit">Daxil ol</button>
+                </form>
+            }
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+</body>
+</html>

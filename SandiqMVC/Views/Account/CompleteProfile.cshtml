@@ -9,7 +9,12 @@
     <p data-i18n="complete_profile_subtitle">Google hesabınla daxil oldun, davam etmək üçün telefon nömrəni əlavə et.</p>
     <form asp-action="CompleteProfile" method="post">
         <div asp-validation-summary="All" class="text-danger"></div>
-        <input asp-for="Phone" data-i18n-placeholder="phone_placeholder" placeholder="Telefon nömrəsi" />
+        <input asp-for="Phone" type="tel" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9+]/g, '')" data-i18n-placeholder="phone_placeholder" placeholder="Telefon nömrəsi" />
+        <span asp-validation-for="Phone" class="text-danger field-validation-error"></span>
         <button type="submit" data-i18n="continue_button">Davam et</button>
     </form>
 </main>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,97 +1,103 @@
 import { getLang } from "./i18n-utils.js";
-import { chatbotData } from "./chatbot-data.js";
+
+const strings = {
+    az: {
+        title: "Kömək",
+        welcome: "Salam! Sənə necə kömək edə bilərəm?",
+        placeholder: "Sualını yaz...",
+        thinking: "Yazır...",
+        error: "Bağlantı xətası baş verdi. Bir az sonra yenidən cəhd et.",
+    },
+    ru: {
+        title: "Помощь",
+        welcome: "Здравствуйте! Чем могу помочь?",
+        placeholder: "Напишите вопрос...",
+        thinking: "Печатает...",
+        error: "Ошибка соединения. Попробуйте ещё раз чуть позже.",
+    },
+    en: {
+        title: "Help",
+        welcome: "Hi! How can I help you?",
+        placeholder: "Type your question...",
+        thinking: "Typing...",
+        error: "Connection error. Please try again in a moment.",
+    },
+};
 
 const lang = getLang();
-const data = chatbotData[lang] || chatbotData.az;
+const t = strings[lang] || strings.az;
 
 const toggle = document.getElementById("chatbotToggle");
 const panel = document.getElementById("chatbotPanel");
 const closeBtn = document.getElementById("chatbotClose");
 const titleEl = document.getElementById("chatbotTitle");
-const body = document.getElementById("chatbotBody");
+const messagesEl = document.getElementById("chatbotMessages");
+const form = document.getElementById("chatbotForm");
+const input = document.getElementById("chatbotInput");
 
-if (toggle && panel && closeBtn && titleEl && body) {
-  titleEl.textContent = data.title;
+if (toggle && panel && closeBtn && titleEl && messagesEl && form && input) {
+    titleEl.textContent = t.title;
+    input.placeholder = t.placeholder;
 
-  toggle.addEventListener("click", () => {
-    panel.classList.toggle("hidden");
-    if (!panel.classList.contains("hidden") && body.children.length === 0) {
-      renderCategories();
+    let history = [];
+    let opened = false;
+
+    toggle.addEventListener("click", () => {
+        panel.classList.toggle("hidden");
+        if (!panel.classList.contains("hidden") && !opened) {
+            opened = true;
+            addMessage("bot", t.welcome);
+            input.focus();
+        }
+    });
+
+    closeBtn.addEventListener("click", () => {
+        panel.classList.add("hidden");
+    });
+
+    function addMessage(role, text) {
+        const msg = document.createElement("div");
+        msg.className = `chatbot-msg chatbot-msg--${role}`;
+        msg.textContent = text;
+        messagesEl.appendChild(msg);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+        return msg;
     }
-  });
 
-  closeBtn.addEventListener("click", () => {
-    panel.classList.add("hidden");
-  });
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const message = input.value.trim();
+        if (!message) return;
 
-  function backButton(onClick) {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "chatbot-back-btn";
-    btn.textContent = "‹ " + data.backButton;
-    btn.addEventListener("click", onClick);
-    return btn;
-  }
+        input.value = "";
+        input.disabled = true;
+        addMessage("user", message);
 
-  function optionButton(label, onClick) {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "chatbot-option-btn";
-    btn.textContent = label;
-    btn.addEventListener("click", onClick);
-    return btn;
-  }
+        const thinkingMsg = addMessage("bot", t.thinking);
+        thinkingMsg.classList.add("chatbot-msg--thinking");
 
-  function renderCategories() {
-    body.innerHTML = "";
+        try {
+            const response = await fetch("/Chat/Ask", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message, lang, history }),
+            });
 
-    const welcome = document.createElement("p");
-    welcome.className = "chatbot-welcome";
-    welcome.textContent = data.welcome;
-    body.appendChild(welcome);
+            if (!response.ok) throw new Error("Request failed");
 
-    const list = document.createElement("div");
-    list.className = "chatbot-options";
-    data.categories.forEach((cat, catIndex) => {
-      list.appendChild(optionButton(cat.title, () => renderQuestions(catIndex)));
+            const data = await response.json();
+            thinkingMsg.remove();
+            addMessage("bot", data.reply);
+
+            history.push({ role: "user", text: message });
+            history.push({ role: "model", text: data.reply });
+            if (history.length > 20) history = history.slice(-20);
+        } catch (err) {
+            thinkingMsg.remove();
+            addMessage("bot", t.error);
+        } finally {
+            input.disabled = false;
+            input.focus();
+        }
     });
-    body.appendChild(list);
-  }
-
-  function renderQuestions(catIndex) {
-    const cat = data.categories[catIndex];
-    body.innerHTML = "";
-    body.appendChild(backButton(renderCategories));
-
-    const heading = document.createElement("p");
-    heading.className = "chatbot-heading";
-    heading.textContent = cat.title;
-    body.appendChild(heading);
-
-    const list = document.createElement("div");
-    list.className = "chatbot-options";
-    cat.questions.forEach((item, qIndex) => {
-      list.appendChild(optionButton(item.q, () => renderAnswer(catIndex, qIndex)));
-    });
-    body.appendChild(list);
-  }
-
-  function renderAnswer(catIndex, qIndex) {
-    const cat = data.categories[catIndex];
-    const item = cat.questions[qIndex];
-    body.innerHTML = "";
-    body.appendChild(backButton(() => renderQuestions(catIndex)));
-
-    const q = document.createElement("p");
-    q.className = "chatbot-question";
-    q.textContent = item.q;
-    body.appendChild(q);
-
-    const a = document.createElement("p");
-    a.className = "chatbot-answer";
-    a.textContent = item.a;
-    body.appendChild(a);
-
-    body.appendChild(optionButton(data.backToMenu, renderCategories));
-  }
 }

@@ -33,13 +33,7 @@
         };
 
         <div class="pending-row">
-            <div style="width:100px;height:100px;background:#EFE6D6;border-radius:8px;flex-shrink:0;"></div>
-            <div class="pending-row__info">
-                <h3>@product.Title</h3>
-                <p class="pending-row__desc">@product.Description</p>
-                <p class="pending-row__meta">@product.Price.ToString("N0") ₼ · @product.Category?.Name</p>
-                <span class="status-badge">@statusLabel</span>
-            </div>
+            <partial name="_ListingCardInfo" model="new SandiqMVC.Areas.Admin.ViewModels.ListingCardViewModel { Product = product, StatusLabel = statusLabel }" />
             <div class="pending-row__actions">
                 <button type="button" class="admin-btn edit-listing-btn"
                         data-id="@product.Id"
@@ -119,7 +113,7 @@
                     </label>
                     <label>
                         Qiymət (₼)
-                        <input type="number" name="Price" id="formPrice" min="0" required />
+                        <input type="text" inputmode="decimal" name="Price" id="formPrice" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" required />
                     </label>
                     <label>
                         Vəziyyəti
@@ -130,7 +124,8 @@
                     </label>
                     <label class="admin-form__full">
                         Yerləşdiyi yer
-                        <input type="text" name="Location" id="formLocation" placeholder="Məs. Bakı, Nəsimi" />
+                        <input type="text" name="Location" id="formLocation" list="azRegions" autocomplete="off" placeholder="Məs. Bakı, Nəsimi" />
+                        <partial name="_AzRegionsDatalist" />
                     </label>
                 </div>
             </section>

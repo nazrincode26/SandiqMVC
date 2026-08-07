@@ -1,0 +1,11 @@
+@{
+    var idPrefix = ViewData["IdPrefix"] as string ?? "rating";
+    var inputName = ViewData["InputName"] as string ?? "rating";
+}
+<div class="star-rating-input">
+    @for (int i = 5; i >= 1; i--)
+    {
+        <input type="radio" id="@(idPrefix)_@i" name="@inputName" value="@i" required />
+        <label for="@(idPrefix)_@i">★</label>
+    }
+</div>

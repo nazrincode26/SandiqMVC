@@ -96,6 +96,10 @@ export const en = {
   status_pending: "Pending",
   status_approved: "Approved",
   status_rejected: "Rejected",
+  edit_button: "Edit",
+  delete_button: "Delete",
+  edit_request_pending: "Edit request pending",
+  delete_request_pending: "Delete request pending",
 
   settings_title: "Settings",
   settings_subtitle: "Update your profile information here",
@@ -177,5 +181,8 @@ export const en = {
   detail_condition_label: "Condition:",
   detail_location_label: "Location:",
   detail_seller_label: "Seller:",
-  detail_approved_at_label: "Approved on:",
+    detail_approved_at_label: "Approved on:",
+
+    error_title: "Something went wrong",
+    error_text: "An unexpected error occurred. Please try again in a moment.",
 };

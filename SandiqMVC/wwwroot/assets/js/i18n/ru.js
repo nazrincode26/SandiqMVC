@@ -96,6 +96,10 @@ export const ru = {
   status_pending: "На рассмотрении",
   status_approved: "Одобрено",
   status_rejected: "Отклонено",
+  edit_button: "Редактировать",
+  delete_button: "Удалить",
+  edit_request_pending: "Запрос на редактирование ожидает",
+  delete_request_pending: "Запрос на удаление ожидает",
 
   settings_title: "Настройки",
   settings_subtitle: "Здесь вы можете обновить данные профиля",
@@ -177,5 +181,8 @@ export const ru = {
   detail_condition_label: "Состояние:",
   detail_location_label: "Расположение:",
   detail_seller_label: "Продавец:",
-  detail_approved_at_label: "Дата подтверждения:",
+    detail_approved_at_label: "Дата подтверждения:",
+
+    error_title: "Произошла ошибка",
+    error_text: "Произошла непредвиденная ошибка. Пожалуйста, попробуйте ещё раз чуть позже.",
 };

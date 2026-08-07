@@ -1,0 +1,150 @@
+.product-detail__viewcount {
+  color: var(--color-text-light);
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.seller-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.reviews-section {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-top: 24px;
+}
+
+.reviews-section__title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.reviews-summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-text-light);
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.reviews-summary__stars {
+  color: var(--color-primary);
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.review-card {
+  padding: 14px 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.review-card:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.review-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.review-card__author {
+  font-weight: 600;
+}
+
+.review-card__date {
+  color: var(--color-text-light);
+  font-size: 12px;
+}
+
+.review-card__stars {
+  color: var(--color-primary);
+  letter-spacing: 1px;
+}
+
+.review-card__comment {
+  color: var(--color-text);
+  margin-top: 4px;
+}
+
+.review-empty {
+  color: var(--color-text-light);
+  font-size: 14px;
+}
+
+.review-login-note {
+  color: var(--color-text-light);
+  font-size: 14px;
+  margin-top: 12px;
+}
+
+.star-rating-input {
+  display: inline-flex;
+  flex-direction: row-reverse;
+  gap: 2px;
+}
+
+.star-rating-input input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.star-rating-input label {
+  font-size: 26px;
+  line-height: 1;
+  color: var(--color-border);
+  cursor: pointer;
+}
+
+.star-rating-input input:checked ~ label,
+.star-rating-input label:hover,
+.star-rating-input label:hover ~ label {
+  color: var(--color-primary);
+}
+
+.review-form {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 420px;
+}
+
+.review-form textarea {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 10px;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 70px;
+}
+
+.review-form button {
+  align-self: flex-start;
+  background: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  font-weight: 600;
+}
+
+.review-already-note {
+  color: var(--color-text-light);
+  font-size: 14px;
+  margin-top: 12px;
+}

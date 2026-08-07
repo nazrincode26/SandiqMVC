@@ -17,7 +17,7 @@
 }
 else
 {
-    <form asp-action="Create" method="post" class="post-ad-form" id="postAdForm">
+    <form asp-action="Create" method="post" enctype="multipart/form-data" class="post-ad-form" id="postAdForm">
         <div class="post-ad-form__header">
             <div>
                 <h2 data-i18n="post_ad_title">Elan yerləşdir</h2>
@@ -79,7 +79,7 @@ else
                 </label>
                 <label>
                     <span data-i18n="price_label">Qiymət (₼)</span>
-                    <input asp-for="Price" placeholder="0" />
+                    <input asp-for="Price" type="text" inputmode="decimal" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" placeholder="0" />
                     <span asp-validation-for="Price" class="text-danger"></span>
                 </label>
                 <label>
@@ -91,7 +91,8 @@ else
                 </label>
                 <label class="post-ad-form__full">
                     <span data-i18n="location_label">Yerləşdiyi yer</span>
-                    <input asp-for="Location" data-i18n-placeholder="location_example" placeholder="Məs. Bakı, Nəsimi" />
+                    <input asp-for="Location" list="azRegions" autocomplete="off" data-i18n-placeholder="location_example" placeholder="Məs. Bakı, Nəsimi" />
+                    <partial name="_AzRegionsDatalist" />
                 </label>
             </div>
         </section>
@@ -104,7 +105,7 @@ else
             <div class="post-ad-dropzone" id="dropzone">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                 <p><span data-i18n="drag_drop_text">Şəkilləri bura sürüşdürün və ya</span> <span class="post-ad-dropzone__link" data-i18n="click_to_select">seçmək üçün klikləyin</span></p>
-                <input type="file" id="adImages" accept="image/*" multiple hidden />
+                <input asp-for="ImageFile" id="adImages" accept="image/*" hidden />
             </div>
             <div class="post-ad-previews" id="imagePreviews"></div>
         </section>
@@ -129,110 +130,106 @@ else
     </div>
 
     @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
         <script type="module">
             import { t, getLang } from "/assets/js/i18n-utils.js";
 
             const categoriesData = @Json.Serialize(Model.Categories.Select(c => new { id = c.Id, name = c.Name, nameRu = c.NameRu ?? c.Name, nameEn = c.NameEn ?? c.Name, subcategories = c.Subcategories.Select(s => new { id = s.Id, name = s.Name, nameRu = s.NameRu ?? s.Name, nameEn = s.NameEn ?? s.Name }) }));
 
             function localName(item) {
-                const lang = getLang();
-                if (lang === "ru") return item.nameRu;
-                if (lang === "en") return item.nameEn;
-                return item.name;
+            const lang = getLang();
+            if (lang === "ru") return item.nameRu;
+            if (lang === "en") return item.nameEn;
+            return item.name;
             }
 
             const categorySelect = document.getElementById("adCategory");
             const subcategorySelect = document.getElementById("adSubcategory");
 
             categorySelect.addEventListener("change", () => {
-                const selected = categoriesData.find((c) => String(c.id) === categorySelect.value);
-                const subcats = selected?.subcategories ?? [];
-                subcategorySelect.disabled = subcats.length === 0;
-                subcategorySelect.innerHTML =
-                    `<option value="">${t("select_option")}</option>` +
-                    subcats.map((sub) => `<option value="${sub.id}">${localName(sub)}</option>`).join("");
+            const selected = categoriesData.find((c) => String(c.id) === categorySelect.value);
+            const subcats = selected?.subcategories ?? [];
+            subcategorySelect.disabled = subcats.length === 0;
+            subcategorySelect.innerHTML =
+            `<option value="">${t("select_option")}</option>` +
+            subcats.map((sub) => `<option value="${sub.id}">${localName(sub)}</option>`).join("");
             });
 
             const dropzone = document.getElementById("dropzone");
             const fileInput = document.getElementById("adImages");
             const previewsEl = document.getElementById("imagePreviews");
-            let selectedFiles = [];
 
             dropzone.addEventListener("click", () => fileInput.click());
 
             dropzone.addEventListener("dragover", (e) => {
-                e.preventDefault();
-                dropzone.classList.add("dragover");
+            e.preventDefault();
+            dropzone.classList.add("dragover");
             });
 
             dropzone.addEventListener("dragleave", () => {
-                dropzone.classList.remove("dragover");
+            dropzone.classList.remove("dragover");
             });
 
             dropzone.addEventListener("drop", (e) => {
-                e.preventDefault();
-                dropzone.classList.remove("dragover");
-                addFiles(Array.from(e.dataTransfer.files));
-            });
-
-            fileInput.addEventListener("change", () => {
-                addFiles(Array.from(fileInput.files));
-            });
-
-            function addFiles(files) {
-                const imageFiles = files.filter((f) => f.type.startsWith("image/"));
-                selectedFiles = [...selectedFiles, ...imageFiles];
-                renderPreviews();
+            e.preventDefault();
+            dropzone.classList.remove("dragover");
+            const imageFile = Array.from(e.dataTransfer.files).find((f) => f.type.startsWith("image/"));
+            if (imageFile) {
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(imageFile);
+            fileInput.files = dataTransfer.files;
+            renderPreview();
             }
+            });
 
-            function renderPreviews() {
-                previewsEl.innerHTML = "";
-                selectedFiles.forEach((file, index) => {
-                    const url = URL.createObjectURL(file);
-                    const item = document.createElement("div");
-                    item.className = "post-ad-preview";
-                    item.innerHTML = `
-                            <img src="${url}" alt="${file.name}" />
-                            <button type="button" class="post-ad-preview__remove" data-index="${index}">×</button>
-                          `;
-                    previewsEl.appendChild(item);
-                });
+            fileInput.addEventListener("change", renderPreview);
 
-                previewsEl.querySelectorAll(".post-ad-preview__remove").forEach((btn) => {
-                    btn.addEventListener("click", () => {
-                        const index = Number(btn.dataset.index);
-                        selectedFiles.splice(index, 1);
-                        renderPreviews();
-                    });
-                });
+            function renderPreview() {
+            previewsEl.innerHTML = "";
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            const url = URL.createObjectURL(file);
+            const item = document.createElement("div");
+            item.className = "post-ad-preview";
+            item.innerHTML = `
+            <img src="${url}" alt="${file.name}" />
+            <button type="button" class="post-ad-preview__remove">×</button>
+            `;
+            previewsEl.appendChild(item);
+
+            item.querySelector(".post-ad-preview__remove").addEventListener("click", () => {
+            fileInput.value = "";
+            previewsEl.innerHTML = "";
+            });
             }
 
             (function () {
-                const termsCheckbox = document.getElementById("AcceptTerms");
-                const overlay = document.getElementById("termsModalOverlay");
-                const acceptBtn = document.getElementById("acceptTermsBtn");
-                const form = termsCheckbox.closest("form");
+            const termsCheckbox = document.getElementById("AcceptTerms");
+            const overlay = document.getElementById("termsModalOverlay");
+            const acceptBtn = document.getElementById("acceptTermsBtn");
+            const form = termsCheckbox.closest("form");
 
-                termsCheckbox.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    overlay.classList.remove("hidden");
-                });
+            termsCheckbox.addEventListener("click", (e) => {
+            e.preventDefault();
+            overlay.classList.remove("hidden");
+            });
 
-                acceptBtn.addEventListener("click", () => {
-                    termsCheckbox.checked = true;
-                    overlay.classList.add("hidden");
-                });
+            acceptBtn.addEventListener("click", () => {
+            termsCheckbox.checked = true;
+            overlay.classList.add("hidden");
+            });
 
-                overlay.addEventListener("click", (e) => {
-                    if (e.target === overlay) overlay.classList.add("hidden");
-                });
+            overlay.addEventListener("click", (e) => {
+            if (e.target === overlay) overlay.classList.add("hidden");
+            });
 
-                form.addEventListener("submit", (e) => {
-                    if (!termsCheckbox.checked) {
-                        e.preventDefault();
-                        overlay.classList.remove("hidden");
-                    }
-                });
+            form.addEventListener("submit", (e) => {
+            if (!termsCheckbox.checked) {
+            e.preventDefault();
+            overlay.classList.remove("hidden");
+            }
+            });
             })();
         </script>
     }

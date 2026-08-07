@@ -1,0 +1,19 @@
+@{
+    var azRegions = new[]
+    {
+        "Bakı", "Gəncə", "Sumqayıt", "Mingəçevir", "Naftalan", "Şirvan", "Yevlax", "Xankəndi", "Şuşa",
+        "Abşeron", "Ağcabədi", "Ağdam", "Ağdaş", "Ağstafa", "Ağsu", "Astara", "Balakən", "Beyləqan",
+        "Bərdə", "Biləsuvar", "Cəbrayıl", "Cəlilabad", "Daşkəsən", "Füzuli", "Gədəbəy", "Goranboy",
+        "Göyçay", "Göygöl", "Hacıqabul", "Xaçmaz", "Xızı", "Xocalı", "Xocavənd", "İmişli", "İsmayıllı",
+        "Kəlbəcər", "Kürdəmir", "Qax", "Qazax", "Qəbələ", "Qobustan", "Quba", "Qubadlı", "Qusar",
+        "Laçın", "Lənkəran", "Lerik", "Masallı", "Neftçala", "Oğuz", "Saatlı", "Sabirabad", "Salyan",
+        "Samux", "Siyəzən", "Şabran", "Şamaxı", "Şəki", "Şəmkir", "Tərtər", "Tovuz", "Ucar",
+        "Yardımlı", "Zaqatala", "Zərdab"
+    };
+}
+<datalist id="azRegions">
+    @foreach (var region in azRegions)
+    {
+        <option value="@region"></option>
+    }
+</datalist>

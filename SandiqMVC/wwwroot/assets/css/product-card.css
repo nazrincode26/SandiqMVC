@@ -76,6 +76,28 @@
 .product-card__cart-btn:hover {
   background: var(--color-primary-dark);
 }
+.cart-btn,
+.remove-btn {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-radius: 20px;
+    background: var(--color-primary);
+    color: var(--color-white);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.cart-btn {
+    margin-bottom: 8px;
+}
+
+    .cart-btn:hover,
+    .remove-btn:hover {
+        background: var(--color-primary-dark);
+    }
 
 .category-menu {
   display: flex;

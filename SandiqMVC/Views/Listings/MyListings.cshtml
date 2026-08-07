@@ -2,12 +2,18 @@
 
 @{
     ViewData["Title"] = "Mənim elanlarım";
+    var pendingByProductId = ViewBag.PendingRequestTypeByProductId as Dictionary<int, string> ?? new Dictionary<int, string>();
 }
 
 <div class="my-listings__header">
     <h2 data-i18n="my_listings_title">Mənim elanlarım</h2>
     <a asp-action="Create" class="post-ad-btn post-ad-btn--filled" data-i18n="new_ad_button">+ Yeni elan</a>
 </div>
+
+@if (TempData["Message"] != null)
+{
+    <div class="my-listings__flash">@TempData["Message"]</div>
+}
 
 <div class="my-listings__list">
     @if (!Model.Any())
@@ -36,12 +42,34 @@
         };
 
         <div class="my-listing-row">
-            <div style="width:70px;height:70px;background:#EFE6D6;border-radius:8px;"></div>
+            @if (!string.IsNullOrEmpty(listing.Image))
+            {
+                <img src="@listing.Image" alt="@listing.Title" style="width:70px;height:70px;border-radius:8px;object-fit:cover;" />
+            }
+            else
+            {
+                <div style="width:70px;height:70px;background:#EFE6D6;border-radius:8px;"></div>
+            }
             <div class="my-listing-row__info">
                 <h3>@listing.Title</h3>
                 <p>@listing.Price.ToString("N0") ₼</p>
             </div>
             <span class="status-badge @statusClass" data-i18n="@statusKey">@statusLabel</span>
+            <div class="my-listing-row__actions">
+                @if (pendingByProductId.TryGetValue(listing.Id, out var pendingType))
+                {
+                    <span class="status-badge status--pending" data-i18n="@(pendingType == "delete" ? "delete_request_pending" : "edit_request_pending")">
+                        @(pendingType == "delete" ? "Silmə sorğusu gözlənilir" : "Redaktə sorğusu gözlənilir")
+                    </span>
+                }
+                else
+                {
+                    <a asp-action="Edit" asp-route-id="@listing.Id" class="my-listing-row__edit" data-i18n="edit_button">Redaktə et</a>
+                    <form asp-action="Delete" asp-route-id="@listing.Id" method="post" onsubmit="return confirm('Bu elanın silinməsi üçün admin təsdiqi tələb olunacaq. Davam edilsin?');" style="display:inline;">
+                        <button type="submit" class="my-listing-row__delete" data-i18n="delete_button">Sil</button>
+                    </form>
+                }
+            </div>
         </div>
     }
 </div>

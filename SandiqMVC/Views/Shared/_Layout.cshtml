@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="~/assets/css/header.css" />
     <link rel="stylesheet" href="~/assets/css/product-card.css" />
     <link rel="stylesheet" href="~/assets/css/chatbot.css" />
+    <link rel="stylesheet" href="~/assets/css/reviews.css" />
 </head>
 <body>
     <header>
@@ -68,11 +69,6 @@
                 <div class="header__nav-actions">
                     @if (User.Identity?.IsAuthenticated == true)
                     {
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <a asp-area="Admin" asp-controller="Categories" asp-action="Index">Admin: Kateqoriyalar</a>
-                            <a asp-area="Admin" asp-controller="Listings" asp-action="Index">Admin: Elanlar</a>
-                        }
                         <div class="header__user-menu">
                             <button id="userMenuBtn" class="header__user-btn" type="button">
                                 @User.Identity.Name
@@ -202,7 +198,11 @@
                 <span id="chatbotTitle">Kömək</span>
                 <button id="chatbotClose" class="chatbot-panel__close" type="button" aria-label="Bağla">×</button>
             </div>
-            <div id="chatbotBody" class="chatbot-panel__body"></div>
+            <div id="chatbotMessages" class="chatbot-panel__body"></div>
+            <form id="chatbotForm" class="chatbot-panel__form">
+                <input id="chatbotInput" type="text" autocomplete="off" />
+                <button id="chatbotSendBtn" type="submit" aria-label="Göndər">➤</button>
+            </form>
         </div>
     </div>
 
@@ -216,17 +216,17 @@
     <script src="~/assets/js/sandiq-ui.js" asp-append-version="true"></script>
     <script src="~/assets/js/chatbot.js" type="module" asp-append-version="true"></script>
     <script type="module">
-            import { getLang, setLang, applyTranslations } from "/assets/js/i18n-utils.js";
+        import { getLang, setLang, applyTranslations } from "/assets/js/i18n-utils.js";
 
-            document.getElementById("currentLangLabel").textContent = getLang().toUpperCase();
+        document.getElementById("currentLangLabel").textContent = getLang().toUpperCase();
 
-            document.querySelectorAll(".lang-option").forEach((btn) => {
-                btn.addEventListener("click", () => {
-                    setLang(btn.dataset.lang);
-                });
-            });
+        document.querySelectorAll(".lang-option").forEach((btn) => {
+        btn.addEventListener("click", () => {
+        setLang(btn.dataset.lang);
+        });
+        });
 
-            applyTranslations();
+        applyTranslations();
     </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

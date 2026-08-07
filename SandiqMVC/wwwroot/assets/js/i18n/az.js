@@ -96,6 +96,10 @@ export const az = {
   status_pending: "Gözləyir",
   status_approved: "Təsdiqləndi",
   status_rejected: "Rədd edildi",
+  edit_button: "Redaktə et",
+  delete_button: "Sil",
+  edit_request_pending: "Redaktə sorğusu gözlənilir",
+  delete_request_pending: "Silmə sorğusu gözlənilir",
 
   settings_title: "Parametrlər",
   settings_subtitle: "Profil məlumatlarını buradan yeniləyə bilərsən",
@@ -177,5 +181,8 @@ export const az = {
   detail_condition_label: "Vəziyyət:",
   detail_location_label: "Yer:",
   detail_seller_label: "Satıcı:",
-  detail_approved_at_label: "Təsdiqlənmə tarixi:",
+    detail_approved_at_label: "Təsdiqlənmə tarixi:",
+
+    error_title: "Xəta baş verdi",
+    error_text: "Gözlənilməz bir xəta baş verdi. Zəhmət olmasa bir az sonra yenidən cəhd edin.",
 };

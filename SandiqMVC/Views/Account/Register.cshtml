@@ -11,9 +11,13 @@
     <form asp-action="Register" method="post">
         <div asp-validation-summary="All" class="text-danger"></div>
         <input asp-for="FullName" data-i18n-placeholder="fullname_placeholder" placeholder="Ad Soyad" />
+        <span asp-validation-for="FullName" class="text-danger field-validation-error"></span>
         <input asp-for="Email" data-i18n-placeholder="email_placeholder" placeholder="E-poçt" />
-        <input asp-for="Phone" data-i18n-placeholder="phone_placeholder" placeholder="Telefon nömrəsi" />
+        <span asp-validation-for="Email" class="text-danger field-validation-error"></span>
+        <input asp-for="Phone" type="tel" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9+]/g, '')" data-i18n-placeholder="phone_placeholder" placeholder="Telefon nömrəsi" />
+        <span asp-validation-for="Phone" class="text-danger field-validation-error"></span>
         <input asp-for="Password" data-i18n-placeholder="password_placeholder" placeholder="Şifrə" />
+        <span asp-validation-for="Password" class="text-danger field-validation-error"></span>
         <button type="submit" data-i18n="register_button">Qeydiyyatdan keç</button>
     </form>
     <div class="auth-divider"><span data-i18n="or_divider">və ya</span></div>
@@ -22,45 +26,46 @@
 </main>
 
 @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
     <script type="module">
         import { getLang } from "/assets/js/i18n-utils.js";
 
         function loadGoogleScript(locale) {
-            return new Promise((resolve) => {
-                const script = document.createElement("script");
-                script.src = `https://accounts.google.com/gsi/client?hl=${locale}`;
-                script.async = true;
-                script.defer = true;
-                script.onload = resolve;
-                document.head.appendChild(script);
-            });
+        return new Promise((resolve) => {
+        const script = document.createElement("script");
+        script.src = `https://accounts.google.com/gsi/client?hl=${locale}`;
+        script.async = true;
+        script.defer = true;
+        script.onload = resolve;
+        document.head.appendChild(script);
+        });
         }
 
         loadGoogleScript(getLang()).then(() => {
-            google.accounts.id.initialize({
-                client_id: "@Configuration["Google:ClientId"]",
-                callback: handleGoogleResponse,
-            });
-            google.accounts.id.renderButton(document.getElementById("googleSignInBtn"), {
-                theme: "outline",
-                size: "large",
-                width: "100%",
-            });
+        google.accounts.id.initialize({
+        client_id: "@Configuration["Google:ClientId"]",
+        callback: handleGoogleResponse,
+        });
+        google.accounts.id.renderButton(document.getElementById("googleSignInBtn"), {
+        theme: "outline",
+        size: "large",
+        width: "100%",
+        });
         });
 
         async function handleGoogleResponse(response) {
-            try {
-                const res = await fetch("/Account/GoogleLogin", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ credential: response.credential }),
-                });
-                if (!res.ok) throw new Error("Google login failed");
-                const data = await res.json();
-                window.location.href = data.needsPhone ? "/Account/CompleteProfile" : "/";
-            } catch (error) {
-                console.error("Google ilə qeydiyyat uğursuz oldu:", error);
-            }
+        try {
+        const res = await fetch("/Account/GoogleLogin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ credential: response.credential }),
+        });
+        if (!res.ok) throw new Error("Google login failed");
+        const data = await res.json();
+        window.location.href = data.needsPhone ? "/Account/CompleteProfile" : "/";
+        } catch (error) {
+        console.error("Google ilə qeydiyyat uğursuz oldu:", error);
+        }
         }
     </script>
 }

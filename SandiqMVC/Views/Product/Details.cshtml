@@ -2,6 +2,22 @@
 
 @{
     ViewData["Title"] = Model.Title;
+
+    var sellerReviews = ViewBag.SellerReviews as List<SellerReview> ?? new List<SellerReview>();
+    double? sellerAvg = ViewBag.SellerAverageRating;
+    var productAvg = Model.Reviews.Count > 0 ? Model.Reviews.Average(r => r.Rating) : (double?)null;
+
+    bool isAuthenticated = User.Identity?.IsAuthenticated == true;
+    int currentUserId = isAuthenticated ? (int)ViewBag.CurrentUserId : 0;
+    bool isOwner = isAuthenticated && currentUserId == Model.SubmittedByUserId;
+    bool hasReviewedProduct = isAuthenticated && ViewBag.HasReviewedProduct == true;
+    bool hasReviewedSeller = isAuthenticated && ViewBag.HasReviewedSeller == true;
+
+    Func<double?, string> starText = r =>
+    {
+        var rounded = r.HasValue ? (int)Math.Round(r.Value) : 0;
+        return new string('★', rounded) + new string('☆', 5 - rounded);
+    };
 }
 
 <div class="product-detail" data-id="@Model.Id" data-title="@Model.Title" data-price="@Model.Price">
@@ -10,13 +26,24 @@
     </div>
     <div class="product-detail__info">
         <h1>@Model.Title</h1>
+        <p class="product-detail__viewcount">👁 @Model.ViewCount baxış</p>
         <p class="product-detail__price">@Model.Price.ToString("N0") ₼</p>
         <p class="product-detail__description">@Model.Description</p>
         <ul class="list-unstyled">
             <li><strong data-i18n="detail_category_label">Kateqoriya:</strong> <span data-name-az="@Model.Category?.Name" data-name-ru="@(Model.Category?.NameRu ?? Model.Category?.Name)" data-name-en="@(Model.Category?.NameEn ?? Model.Category?.Name)">@Model.Category?.Name</span></li>
             <li><strong data-i18n="detail_condition_label">Vəziyyət:</strong> <span data-i18n="@(Model.Condition == "new" ? "condition_new" : "condition_used")">@(Model.Condition == "new" ? "Yeni" : "İşlənmiş")</span></li>
             <li><strong data-i18n="detail_location_label">Yer:</strong> @Model.Location</li>
-            <li><strong data-i18n="detail_seller_label">Satıcı:</strong> @Model.SubmittedBy?.FullName</li>
+            <li><strong data-i18n="detail_seller_label">Satıcı:</strong> @Model.SubmittedBy?.FullName
+                @if (sellerAvg.HasValue)
+                {
+                    <span class="review-card__stars">@starText(sellerAvg)</span>
+                    <text> (@sellerReviews.Count)</text>
+                }
+                else
+                {
+                    <span class="review-empty">(hələ rəy yoxdur)</span>
+                }
+            </li>
             @if (Model.ApprovedAt.HasValue)
             {
                 <li><strong data-i18n="detail_approved_at_label">Təsdiqlənmə tarixi:</strong> @Model.ApprovedAt.Value.AddHours(4).ToString("dd.MM.yyyy HH:mm")</li>
@@ -27,6 +54,111 @@
             <button type="button" id="detailFavBtn">♥ <span data-i18n="add_to_favorites">Favorilərə əlavə et</span></button>
         </div>
     </div>
+</div>
+
+<div class="reviews-section">
+    <h2 class="reviews-section__title">Elana rəylər</h2>
+    <div class="reviews-summary">
+        @if (productAvg.HasValue)
+        {
+            <span class="reviews-summary__stars">@starText(productAvg)</span>
+            <span>@productAvg.Value.ToString("0.0") (@Model.Reviews.Count rəy)</span>
+        }
+        else
+        {
+            <span class="review-empty">Hələ rəy yoxdur</span>
+        }
+    </div>
+
+    @foreach (var review in Model.Reviews.OrderByDescending(r => r.CreatedAt))
+    {
+        <div class="review-card">
+            <div class="review-card__header">
+                <span class="review-card__author">@review.User?.FullName</span>
+                <span class="review-card__date">@review.CreatedAt.AddHours(4).ToString("dd.MM.yyyy")</span>
+            </div>
+            <div class="review-card__stars">@starText(review.Rating)</div>
+            @if (!string.IsNullOrWhiteSpace(review.Comment))
+            {
+                <p class="review-card__comment">@review.Comment</p>
+            }
+        </div>
+    }
+
+    @if (isOwner)
+    {
+        <p class="review-already-note">Öz elanınıza rəy yaza bilməzsiniz.</p>
+    }
+    else if (hasReviewedProduct)
+    {
+        <p class="review-already-note">Bu elana artıq rəy yazmısınız.</p>
+    }
+    else if (isAuthenticated)
+    {
+        <form asp-action="AddProductReview" asp-controller="Product" method="post" class="review-form">
+            <input type="hidden" name="productId" value="@Model.Id" />
+            @await Html.PartialAsync("_StarRatingInput", new ViewDataDictionary(ViewData) { ["IdPrefix"] = "prRating", ["InputName"] = "rating" })
+            <textarea name="comment" placeholder="Rəyinizi yazın (istəyə bağlı)"></textarea>
+            <button type="submit">Rəy göndər</button>
+        </form>
+    }
+    else
+    {
+        <p class="review-login-note">Rəy yazmaq üçün <a asp-controller="Account" asp-action="Login">daxil olun</a>.</p>
+    }
+</div>
+
+<div class="reviews-section">
+    <h2 class="reviews-section__title">Satıcı haqqında rəylər</h2>
+    <div class="reviews-summary">
+        @if (sellerAvg.HasValue)
+        {
+            <span class="reviews-summary__stars">@starText(sellerAvg)</span>
+            <span>@sellerAvg.Value.ToString("0.0") (@sellerReviews.Count rəy)</span>
+        }
+        else
+        {
+            <span class="review-empty">Hələ rəy yoxdur</span>
+        }
+    </div>
+
+    @foreach (var review in sellerReviews)
+    {
+        <div class="review-card">
+            <div class="review-card__header">
+                <span class="review-card__author">@review.Reviewer?.FullName</span>
+                <span class="review-card__date">@review.CreatedAt.AddHours(4).ToString("dd.MM.yyyy")</span>
+            </div>
+            <div class="review-card__stars">@starText(review.Rating)</div>
+            @if (!string.IsNullOrWhiteSpace(review.Comment))
+            {
+                <p class="review-card__comment">@review.Comment</p>
+            }
+        </div>
+    }
+
+    @if (isOwner)
+    {
+        <p class="review-already-note">Özünüzü qiymətləndirə bilməzsiniz.</p>
+    }
+    else if (hasReviewedSeller)
+    {
+        <p class="review-already-note">Bu satıcıya artıq rəy yazmısınız.</p>
+    }
+    else if (isAuthenticated)
+    {
+        <form asp-action="AddSellerReview" asp-controller="Product" method="post" class="review-form">
+            <input type="hidden" name="sellerId" value="@Model.SubmittedByUserId" />
+            <input type="hidden" name="productId" value="@Model.Id" />
+            @await Html.PartialAsync("_StarRatingInput", new ViewDataDictionary(ViewData) { ["IdPrefix"] = "slRating", ["InputName"] = "rating" })
+            <textarea name="comment" placeholder="Satıcı haqqında rəyinizi yazın (istəyə bağlı)"></textarea>
+            <button type="submit">Rəy göndər</button>
+        </form>
+    }
+    else
+    {
+        <p class="review-login-note">Rəy yazmaq üçün <a asp-controller="Account" asp-action="Login">daxil olun</a>.</p>
+    }
 </div>
 
 @section Scripts {

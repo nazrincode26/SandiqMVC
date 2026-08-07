@@ -1,10 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 using SandiqMVC.Models;
 
 namespace SandiqMVC.ViewModels;
 
 public class CreateListingViewModel
 {
+    public IFormFile? ImageFile { get; set; }
+
     [Required(ErrorMessage = "Başlıq tələb olunur")]
     [Display(Name = "Başlıq")]
     public string Title { get; set; } = string.Empty;

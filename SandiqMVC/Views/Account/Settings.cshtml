@@ -21,17 +21,24 @@
     <label>
         <span data-i18n="name_label">Ad Soyad</span>
         <input asp-for="FullName" />
+        <span asp-validation-for="FullName" class="text-danger field-validation-error"></span>
     </label>
 
     <label>
         <span data-i18n="email_label">E-poçt</span>
         <input asp-for="Email" />
+        <span asp-validation-for="Email" class="text-danger field-validation-error"></span>
     </label>
 
     <label>
         <span data-i18n="phone_label">Telefon</span>
-        <input asp-for="Phone" placeholder="+994 XX XXX XX XX" />
+        <input asp-for="Phone" type="tel" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9+]/g, '')" placeholder="+994 XX XXX XX XX" />
+        <span asp-validation-for="Phone" class="text-danger field-validation-error"></span>
     </label>
 
     <button type="submit" data-i18n="save_button">Yadda saxla</button>
 </form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

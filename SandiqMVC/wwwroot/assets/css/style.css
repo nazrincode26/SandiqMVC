@@ -125,10 +125,11 @@ section {
   font-size: 14px;
 }
 
-.auth-page input:focus {
-  outline: none;
-  border-color: var(--color-primary);
-}
+    .auth-page input:focus {
+        outline: none;
+        border-color: var(--color-primary);
+        box-shadow: var(--focus-ring);
+    }
 
 .auth-page button[type="submit"] {
   background: var(--color-primary);
@@ -422,12 +423,13 @@ footer {
   font-family: inherit;
 }
 
-.post-ad-form input:focus,
-.post-ad-form select:focus,
-.post-ad-form textarea:focus {
-  outline: none;
-  border-color: var(--color-primary);
-}
+    .post-ad-form input:focus,
+    .post-ad-form select:focus,
+    .post-ad-form textarea:focus {
+        outline: none;
+        border-color: var(--color-primary);
+        box-shadow: var(--focus-ring);
+    }
 
 .post-ad-form__checkbox {
   flex-direction: row !important;
@@ -661,6 +663,54 @@ footer {
   background: #FBE3E0;
   color: var(--color-danger);
 }
+
+.my-listings__flash {
+  background: #E3F2E1;
+  color: #2E7D32;
+  border: 1px solid #C5E4C2;
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.my-listing-row__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.my-listing-row__edit,
+.my-listing-row__delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--color-border);
+  background: var(--color-white);
+  color: var(--color-text);
+}
+
+.my-listing-row__edit:hover,
+.my-listing-row__delete:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.my-listing-row__delete {
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+}
+
+.my-listing-row__delete:hover {
+  background: var(--color-danger);
+  color: var(--color-white);
+}
 .settings-form {
   max-width: 500px;
   margin: 0 auto;
@@ -700,10 +750,11 @@ footer {
   font-family: inherit;
 }
 
-.settings-form input:focus {
-  outline: none;
-  border-color: var(--color-primary);
-}
+    .settings-form input:focus {
+        outline: none;
+        border-color: var(--color-primary);
+        box-shadow: var(--focus-ring);
+    }
 
 .settings-form button[type="submit"] {
   background: var(--color-primary);
@@ -888,6 +939,20 @@ footer {
 .not-found p {
   color: var(--color-text-light);
   margin-bottom: 24px;
+}
+.not-found__request-id {
+    color: var(--color-text-light);
+    font-size: 13px;
+}
+
+.input-validation-error {
+    border-color: var(--color-danger) !important;
+}
+
+.field-validation-error {
+    display: block;
+    margin-top: 4px;
+    font-size: 13px;
 }
 .filter-bar {
   display: flex;
