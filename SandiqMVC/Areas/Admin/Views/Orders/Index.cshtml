@@ -1,0 +1,83 @@
+@model List<SandiqMVC.Models.Order>
+@{
+    ViewData["Title"] = "Sifarişlər";
+    var currentFilter = ViewBag.CurrentFilter as string;
+}
+
+<div class="admin-page-header">
+    <h2>Sifarişlər</h2>
+</div>
+
+<div class="admin-filter-tabs">
+    <a asp-action="Index" asp-route-filter="pending" class="admin-filter-tab @(currentFilter == "pending" ? "active" : "")">Gözləyən</a>
+    <a asp-action="Index" asp-route-filter="confirmed" class="admin-filter-tab @(currentFilter == "confirmed" ? "active" : "")">Təsdiqlənmiş</a>
+    <a asp-action="Index" asp-route-filter="all" class="admin-filter-tab @(currentFilter == "all" ? "active" : "")">Hamısı</a>
+</div>
+
+<div class="pending-list">
+    @if (!Model.Any())
+    {
+        <p>Sifariş yoxdur.</p>
+    }
+    @foreach (var order in Model)
+    {
+        var statusLabel = order.Status switch
+        {
+            "confirmed" => "Ödəniş təsdiqləndi",
+            "cancelled" => "Ləğv edildi",
+            _ => "Gözləyir"
+        };
+        var statusClass = order.Status switch
+        {
+            "confirmed" => "status--approved",
+            "cancelled" => "status--rejected",
+            _ => "status--pending"
+        };
+
+        <div class="pending-row" style="flex-direction:column;align-items:stretch;">
+            <div style="display:flex;justify-content:space-between;align-items:center;width:100%;">
+                <div>
+                    <h3>Sifariş #@order.Id <span class="status-badge @statusClass">@statusLabel</span></h3>
+                    <p class="pending-row__meta">
+                        Alıcı: @order.Buyer?.FullName · @order.CreatedAt.AddHours(4).ToString("dd.MM.yyyy HH:mm")
+                    </p>
+                </div>
+                <div class="pending-row__actions">
+                    @if (order.Status == "pending")
+                    {
+                        <form asp-action="Confirm" asp-route-id="@order.Id" method="post">
+                            <button type="submit" class="admin-btn admin-btn--primary">Ödəniş təsdiqləndi</button>
+                        </form>
+                        <form asp-action="Cancel" asp-route-id="@order.Id" method="post">
+                            <button type="submit" class="admin-btn admin-btn--danger">Ləğv et</button>
+                        </form>
+                    }
+                </div>
+            </div>
+
+            <table class="request-diff" style="margin-top:10px;">
+                <thead>
+                    <tr><th>Məhsul</th><th>Satıcı</th><th>Miqdar</th><th>Məbləğ</th><th>Satıcıya</th><th>Platform payı</th></tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in order.Items)
+                    {
+                        <tr>
+                            <td>@item.Title</td>
+                            <td>@item.Seller?.FullName</td>
+                            <td>@item.Quantity</td>
+                            <td>@((item.UnitPrice * item.Quantity).ToString("N2")) ₼</td>
+                            <td>@item.SellerAmount.ToString("N2") ₼</td>
+                            <td>@item.PlatformFeeAmount.ToString("N2") ₼</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <p class="pending-row__meta" style="text-align:right;margin-top:6px;">
+                Cəmi: <strong>@order.TotalAmount.ToString("N2") ₼</strong> ·
+                Satıcılara: @order.SellerPayoutAmount.ToString("N2") ₼ ·
+                Platform: @order.PlatformFeeAmount.ToString("N2") ₼
+            </p>
+        </div>
+    }
+</div>

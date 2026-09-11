@@ -2,9 +2,23 @@
 
 @{
     ViewData["Title"] = Model.Category.Name;
+    var currentSort = Context.Request.Query["sort"].ToString();
+    var isAlphaSort = string.IsNullOrEmpty(currentSort) || currentSort == "alpha";
 }
 
 <h2 id="categoryTitle" data-name-az="@Model.Category.Name" data-name-ru="@(Model.Category.NameRu ?? Model.Category.Name)" data-name-en="@(Model.Category.NameEn ?? Model.Category.Name)">@Model.Category.Name</h2>
+
+@if (Model.Subcategories.Any())
+{
+    <div class="subcategory-chips">
+        <a href="/Category/Index/@Model.Category.Id" class="subcategory-chip @(Model.SelectedSubcategoryId == null ? "active" : "")" data-i18n="filter_all_conditions">Hamısı</a>
+        @foreach (var sub in Model.Subcategories)
+        {
+            <a href="/Category/Index/@sub.Id" class="subcategory-chip @(Model.SelectedSubcategoryId == sub.Id ? "active" : "")"
+               data-name-az="@sub.Name" data-name-ru="@(sub.NameRu ?? sub.Name)" data-name-en="@(sub.NameEn ?? sub.Name)">@sub.Name</a>
+        }
+    </div>
+}
 
 <form method="get" class="filter-bar">
     <input type="hidden" name="q" value="@Context.Request.Query["q"]" />
@@ -30,17 +44,18 @@
     <div class="filter-bar__group">
         <label data-i18n="filter_sort_label">Sırala</label>
         <select name="sort">
-            <option value="newest" data-i18n="sort_newest">Ən yeni</option>
-            <option value="oldest" data-i18n="sort_oldest" selected="@(Context.Request.Query["sort"] == "oldest" ? "selected" : null)">Ən köhnə</option>
-            <option value="price_asc" data-i18n="sort_price_asc" selected="@(Context.Request.Query["sort"] == "price_asc" ? "selected" : null)">Qiymət: ucuzdan bahaya</option>
-            <option value="price_desc" data-i18n="sort_price_desc" selected="@(Context.Request.Query["sort"] == "price_desc" ? "selected" : null)">Qiymət: bahadan ucuza</option>
+            <option value="alpha" data-i18n="sort_alpha" selected="@(isAlphaSort ? "selected" : null)">Əlifba sırası ilə</option>
+            <option value="newest" data-i18n="sort_newest" selected="@(currentSort == "newest" ? "selected" : null)">Ən yeni</option>
+            <option value="oldest" data-i18n="sort_oldest" selected="@(currentSort == "oldest" ? "selected" : null)">Ən köhnə</option>
+            <option value="price_asc" data-i18n="sort_price_asc" selected="@(currentSort == "price_asc" ? "selected" : null)">Qiymət: ucuzdan bahaya</option>
+            <option value="price_desc" data-i18n="sort_price_desc" selected="@(currentSort == "price_desc" ? "selected" : null)">Qiymət: bahadan ucuza</option>
         </select>
     </div>
 
     <button type="submit" class="post-ad-btn post-ad-btn--filled" data-i18n="apply_filters_button">Tətbiq et</button>
 </form>
 
-<div class="product-grid">
+<div class="product-grid" data-sort-mode="@(isAlphaSort ? "alpha" : "")">
     @if (!Model.Products.Any())
     {
         <p data-i18n="no_products_found">Bu kateqoriyada elan yoxdur.</p>

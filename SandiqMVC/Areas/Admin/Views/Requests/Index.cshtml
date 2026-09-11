@@ -51,9 +51,10 @@
                             <tr><td>Kateqoriya</td><td>@product.Category?.Name</td><td>@CategoryName(request.CategoryId)</td></tr>
                             <tr><td>Vəziyyət</td><td>@product.Condition</td><td>@request.Condition</td></tr>
                             <tr><td>Yer</td><td>@product.Location</td><td>@request.Location</td></tr>
-                            @if (!string.IsNullOrEmpty(request.Image))
+                            @if (!string.IsNullOrEmpty(request.ImagesJson))
                             {
-                                <tr><td>Şəkil</td><td>-</td><td>Yeni şəkil yükləndi</td></tr>
+                                var newCount = System.Text.Json.JsonSerializer.Deserialize<List<string>>(request.ImagesJson)?.Count ?? 0;
+                                <tr><td>Şəkillər</td><td>@product.Images.Count ədəd</td><td>@newCount yeni şəkil yükləndi</td></tr>
                             }
                         </tbody>
                     </table>

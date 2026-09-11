@@ -13,6 +13,11 @@ public class SandiqMvcDbContext : DbContext
     public DbSet<ProductReview> ProductReviews { get; set; }
     public DbSet<SellerReview> SellerReviews { get; set; }
     public DbSet<ListingRequest> ListingRequests { get; set; }
+    public DbSet<ProductImage> ProductImages { get; set; }
+    public DbSet<PaymentCard> PaymentCards { get; set; }
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<OrderItem> OrderItems { get; set; }
+    public DbSet<SearchKeyword> SearchKeywords { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -76,5 +81,41 @@ public class SandiqMvcDbContext : DbContext
             .WithMany()
             .HasForeignKey(r => r.RequestedByUserId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<ProductImage>()
+            .HasOne(i => i.Product)
+            .WithMany(p => p.Images)
+            .HasForeignKey(i => i.ProductId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Order>()
+            .HasOne(o => o.Buyer)
+            .WithMany()
+            .HasForeignKey(o => o.BuyerUserId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<OrderItem>()
+            .HasOne(i => i.Order)
+            .WithMany(o => o.Items)
+            .HasForeignKey(i => i.OrderId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<OrderItem>()
+            .HasOne(i => i.Product)
+            .WithMany()
+            .HasForeignKey(i => i.ProductId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<OrderItem>()
+            .HasOne(i => i.Seller)
+            .WithMany()
+            .HasForeignKey(i => i.SellerUserId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<SearchKeyword>()
+            .HasOne(k => k.Category)
+            .WithMany()
+            .HasForeignKey(k => k.CategoryId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

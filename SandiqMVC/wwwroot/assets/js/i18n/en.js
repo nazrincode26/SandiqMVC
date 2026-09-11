@@ -166,6 +166,7 @@ export const en = {
   filter_condition_label: "Condition",
   filter_all_conditions: "All",
   filter_sort_label: "Sort by",
+  sort_alpha: "Alphabetical",
   sort_newest: "Newest first",
   sort_oldest: "Oldest first",
   sort_price_asc: "Price: low to high",

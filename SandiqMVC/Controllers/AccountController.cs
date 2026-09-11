@@ -34,6 +34,13 @@ public class AccountController : Controller
     [HttpPost]
     public async Task<IActionResult> Register(RegisterViewModel model)
     {
+        var phone = model.Phone;
+        if (!NormalizePhone(ref phone, required: false, out var phoneError))
+        {
+            ModelState.AddModelError(nameof(model.Phone), phoneError!);
+        }
+        model.Phone = phone;
+
         if (!ModelState.IsValid) return View(model);
 
         if (await _context.Users.AnyAsync(u => u.Email == model.Email))
@@ -154,6 +161,13 @@ public class AccountController : Controller
     [HttpPost]
     public async Task<IActionResult> CompleteProfile(CompleteProfileViewModel model)
     {
+        var phone = model.Phone;
+        if (!NormalizePhone(ref phone, required: true, out var phoneError))
+        {
+            ModelState.AddModelError(nameof(model.Phone), phoneError!);
+        }
+        model.Phone = phone ?? string.Empty;
+
         if (!ModelState.IsValid) return View(model);
 
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
@@ -221,6 +235,32 @@ public class AccountController : Controller
         return View(model);
     }
 
+    private static bool NormalizePhone(ref string? phone, bool required, out string? error)
+    {
+        error = null;
+        var trimmed = phone?.Trim();
+
+        if (string.IsNullOrWhiteSpace(trimmed) || trimmed == "+994")
+        {
+            phone = null;
+            if (required)
+            {
+                error = "Telefon nömrəsi tələb olunur.";
+                return false;
+            }
+            return true;
+        }
+
+        if (!System.Text.RegularExpressions.Regex.IsMatch(trimmed, @"^\+994 \d{2} \d{3} \d{2} \d{2}$"))
+        {
+            error = "Telefon nömrəsi düzgün formatda deyil (+994 XX XXX XX XX).";
+            return false;
+        }
+
+        phone = trimmed;
+        return true;
+    }
+
     private async Task SignInUser(User user)
     {
         var claims = new List<Claim>
@@ -259,6 +299,13 @@ public class AccountController : Controller
     [HttpPost]
     public async Task<IActionResult> Settings(SettingsViewModel model)
     {
+        var phone = model.Phone;
+        if (!NormalizePhone(ref phone, required: false, out var phoneError))
+        {
+            ModelState.AddModelError(nameof(model.Phone), phoneError!);
+        }
+        model.Phone = phone;
+
         if (!ModelState.IsValid) return View(model);
 
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);

@@ -42,3 +42,13 @@ export function getCategoryName(category) {
   if (lang === "en" && category.nameEn) return category.nameEn;
   return category.name;
 }
+
+export function sortProductGrids(root = document) {
+  const lang = getLang();
+  const collator = new Intl.Collator(lang, { sensitivity: "base" });
+  root.querySelectorAll('.product-grid[data-sort-mode="alpha"]').forEach((grid) => {
+    const cards = Array.from(grid.children).filter((el) => el.classList.contains("product-card"));
+    cards.sort((a, b) => collator.compare(a.dataset.title || "", b.dataset.title || ""));
+    cards.forEach((card) => grid.appendChild(card));
+  });
+}

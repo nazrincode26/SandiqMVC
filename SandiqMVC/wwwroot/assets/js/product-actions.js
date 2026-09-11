@@ -13,7 +13,7 @@ document.addEventListener("click", (e) => {
             id: Number(card.dataset.id),
             title: card.dataset.title,
             price: Number(card.dataset.price),
-            image: null,
+            image: card.dataset.image || null,
         });
         updateHeaderBadges();
         showToast("Məhsul səbətə əlavə olundu");
@@ -27,7 +27,7 @@ document.addEventListener("click", (e) => {
             id: Number(card.dataset.id),
             title: card.dataset.title,
             price: Number(card.dataset.price),
-            image: null,
+            image: card.dataset.image || null,
         });
         favBtn.classList.toggle("active");
         updateHeaderBadges();

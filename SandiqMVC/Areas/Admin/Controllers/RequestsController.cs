@@ -1,7 +1,9 @@
+using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SandiqMVC.DAL;
+using SandiqMVC.Models;
 
 namespace SandiqMVC.Areas.Admin.Controllers;
 
@@ -20,6 +22,7 @@ public class RequestsController : Controller
     {
         var requests = await _context.ListingRequests
             .Include(r => r.Product).ThenInclude(p => p!.Category)
+            .Include(r => r.Product).ThenInclude(p => p!.Images)
             .Include(r => r.RequestedBy)
             .Where(r => r.Status == "pending")
             .OrderBy(r => r.CreatedAt)
@@ -34,7 +37,7 @@ public class RequestsController : Controller
     public async Task<IActionResult> Approve(int id)
     {
         var request = await _context.ListingRequests
-            .Include(r => r.Product)
+            .Include(r => r.Product).ThenInclude(p => p!.Images)
             .FirstOrDefaultAsync(r => r.Id == id);
 
         if (request == null) return NotFound();
@@ -51,9 +54,16 @@ public class RequestsController : Controller
             product.Condition = request.Condition;
             product.Location = request.Location;
 
-            if (!string.IsNullOrEmpty(request.Image))
+            if (!string.IsNullOrEmpty(request.ImagesJson))
             {
-                product.Image = request.Image;
+                var newPaths = JsonSerializer.Deserialize<List<string>>(request.ImagesJson) ?? new List<string>();
+                _context.ProductImages.RemoveRange(product.Images);
+                product.Images.Clear();
+                for (var i = 0; i < newPaths.Count; i++)
+                {
+                    product.Images.Add(new ProductImage { ProductId = product.Id, Path = newPaths[i], SortOrder = i });
+                }
+                product.Image = newPaths.FirstOrDefault() ?? product.Image;
             }
         }
         else if (request.Type == "delete")

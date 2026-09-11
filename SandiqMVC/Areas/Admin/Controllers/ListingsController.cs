@@ -13,10 +13,42 @@ namespace SandiqMVC.Areas.Admin.Controllers;
 public class ListingsController : Controller
 {
     private readonly SandiqMvcDbContext _context;
+    private readonly IWebHostEnvironment _environment;
 
-    public ListingsController(SandiqMvcDbContext context)
+    public ListingsController(SandiqMvcDbContext context, IWebHostEnvironment environment)
     {
         _context = context;
+        _environment = environment;
+    }
+
+    private async Task<List<string>> SaveImagesAsync(List<IFormFile>? imageFiles)
+    {
+        var paths = new List<string>();
+        if (imageFiles == null)
+        {
+            return paths;
+        }
+
+        var uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads", "products");
+        Directory.CreateDirectory(uploadsFolder);
+
+        foreach (var file in imageFiles.Take(Product.MaxImages))
+        {
+            if (file == null || file.Length == 0) continue;
+
+            var extension = Path.GetExtension(file.FileName);
+            var fileName = $"{Guid.NewGuid()}{extension}";
+            var filePath = Path.Combine(uploadsFolder, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            paths.Add($"/uploads/products/{fileName}");
+        }
+
+        return paths;
     }
 
     public async Task<IActionResult> Index()
@@ -57,7 +89,7 @@ public class ListingsController : Controller
 
     public async Task<IActionResult> AllListings(string filter = "all")
     {
-        var query = _context.Products.Include(p => p.Category).Include(p => p.SubmittedBy).AsQueryable();
+        var query = _context.Products.Include(p => p.Category).Include(p => p.SubmittedBy).Include(p => p.Images).AsQueryable();
 
         if (filter == "active")
         {
@@ -80,6 +112,7 @@ public class ListingsController : Controller
     public async Task<IActionResult> CreateAdmin(AdminListingViewModel model)
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var imagePaths = await SaveImagesAsync(model.ImageFiles);
 
         var product = new Product
         {
@@ -90,9 +123,15 @@ public class ListingsController : Controller
             SubcategoryId = model.SubcategoryId,
             Condition = model.Condition,
             Location = model.Location,
+            Image = imagePaths.FirstOrDefault(),
             SubmittedByUserId = userId,
             Status = "approved"
         };
+
+        for (var i = 0; i < imagePaths.Count; i++)
+        {
+            product.Images.Add(new ProductImage { Path = imagePaths[i], SortOrder = i });
+        }
 
         _context.Products.Add(product);
         await _context.SaveChangesAsync();
@@ -103,7 +142,7 @@ public class ListingsController : Controller
     [HttpPost]
     public async Task<IActionResult> EditAdmin(AdminListingViewModel model)
     {
-        var product = await _context.Products.FindAsync(model.Id);
+        var product = await _context.Products.Include(p => p.Images).FirstOrDefaultAsync(p => p.Id == model.Id);
         if (product == null) return NotFound();
 
         product.Title = model.Title;
@@ -113,6 +152,18 @@ public class ListingsController : Controller
         product.SubcategoryId = model.SubcategoryId;
         product.Condition = model.Condition;
         product.Location = model.Location;
+
+        if (model.ImageFiles != null && model.ImageFiles.Any(f => f.Length > 0))
+        {
+            var imagePaths = await SaveImagesAsync(model.ImageFiles);
+            _context.ProductImages.RemoveRange(product.Images);
+            product.Images.Clear();
+            for (var i = 0; i < imagePaths.Count; i++)
+            {
+                product.Images.Add(new ProductImage { ProductId = product.Id, Path = imagePaths[i], SortOrder = i });
+            }
+            product.Image = imagePaths.FirstOrDefault() ?? product.Image;
+        }
 
         await _context.SaveChangesAsync();
 

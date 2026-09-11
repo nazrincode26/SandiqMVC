@@ -17,6 +17,7 @@ public class CategoryMenuViewComponent : ViewComponent
     {
         var categories = await _context.Categories
             .Where(c => c.ParentId == null)
+            .Include(c => c.Subcategories)
             .ToListAsync();
 
         return View(categories);

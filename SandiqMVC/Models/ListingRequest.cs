@@ -22,6 +22,7 @@ public class ListingRequest
     public string? Condition { get; set; }
     public string? Location { get; set; }
     public string? Image { get; set; }
+    public string? ImagesJson { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? ReviewedAt { get; set; }

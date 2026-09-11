@@ -22,6 +22,7 @@ public class ProductController : Controller
             .Include(p => p.Category)
             .Include(p => p.SubmittedBy)
             .Include(p => p.Reviews).ThenInclude(r => r.User)
+            .Include(p => p.Images)
             .FirstOrDefaultAsync(p => p.Id == id && p.Status == "approved");
 
         if (product == null) return NotFound();

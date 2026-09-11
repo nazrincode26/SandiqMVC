@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <title>İllik Təkmilləşdirmə Planı</title>
+    <style>
+        @page {
+            size: A4 portrait;
+            margin: 12mm 10mm 12mm 10mm;
+        }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: #2c3e50;
+            margin: 0;
+            padding: 0;
+            font-size: 9.5pt;
+            background-color: #fff;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 12px;
+            border-bottom: 2px solid #2c3e50;
+            padding-bottom: 8px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 16pt;
+            color: #1a252f;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .info-panel {
+            display: flex;
+            justify-content: space-between;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 6px 12px;
+            margin-bottom: 12px;
+            font-size: 9pt;
+            font-weight: 600;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            page-break-inside: auto;
+        }
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto;
+        }
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 5px 6px;
+            text-align: left;
+            vertical-align: middle;
+        }
+        th {
+            background-color: #1e293b;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 8.5pt;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        .col-no { width: 4%; text-align: center; font-weight: bold; }
+        .col-date { width: 11%; text-align: center; white-space: nowrap; }
+        .col-day { width: 5%; text-align: center; font-weight: bold; }
+        .col-topic { width: 42%; font-weight: 600; color: #0f172a; }
+        .col-goal { width: 38%; color: #334155; }
+        
+        @media print {
+            .no-print {
+                display: none;
+            }
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+        
+        .print-btn {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            font-size: 10pt;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.2s;
+        }
+        .print-btn:hover {
+            background-color: #1d4ed8;
+        }
+    </style>
+</head>
+<body>
+
+    <button class="print-btn no-print" onclick="window.print()">PDF kimi Saxla / Çap Et</button>
+
+    <div class="header">
+        <h1>İllik Təkmilləşdirmə Planı (2026–2027)</h1>
+    </div>
+
+    <div class="info-panel">
+        <span>Dərs günləri: Həftədə 2 dəfə (I və V günlər)</span>
+        <span>Başlama tarixi: 14 Avqust 2026</span>
+        <span>Ümumi dərs sayı: 72 dərslik proqram</span>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Tarix</th>
+                <th>Gün</th>
+                <th>Dərs Mövzusu</th>
+                <th>Məqsəd və Fəaliyyət</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td class="col-no">1</td><td class="col-date">14.08.2026</td><td class="col-day">V</td><td class="col-topic">Diqnostik qiymətləndirmə və boşluqların təyini</td><td class="col-goal">Şagirdin baza biliklərinin və zəif nöqtələrinin xəritələnməsi</td></tr>
+            <tr><td class="col-no">2</td><td class="col-date">17.08.2026</td><td class="col-day">I</td><td class="col-topic">Natural ədədlər və şifahi hesablamalar</td><td class="col-goal">Sürətli toplama, çıxma və vurma alqoritmləri</td></tr>
+            <tr><td class="col-no">3</td><td class="col-date">21.08.2026</td><td class="col-day">V</td><td class="col-topic">Bölünmə əlamətləri və qalıqlı bölmə</td><td class="col-goal">Praktik bölünmə qaydaları və qalıqla iş bacarığı</td></tr>
+            <tr><td class="col-no">4</td><td class="col-date">24.08.2026</td><td class="col-day">I</td><td class="col-topic">Sadə və mürəkkəb ədədlər, vuruqlara ayırma</td><td class="col-goal">Ədəd anlayışının dərinləşdirilməsi</td></tr>
+            <tr><td class="col-no">5</td><td class="col-date">28.08.2026</td><td class="col-day">V</td><td class="col-topic">ƏBOB və ƏKOB-un həyati məsələlərə tətbiqi</td><td class="col-goal">Dövri və paylanma məsələlərinin modelləşdirilməsi</td></tr>
+            <tr><td class="col-no">6</td><td class="col-date">31.08.2026</td><td class="col-day">I</td><td class="col-topic">Adi kəsrlər: Məxrəcləri müxtəlif olan kəsrlər</td><td class="col-goal">Kəsr təməlinin möhkəmləndirilməsi</td></tr>
+            <tr><td class="col-no">7</td><td class="col-date">04.09.2026</td><td class="col-day">V</td><td class="col-topic">Adi kəsrlər üzərində vurma və bölmə</td><td class="col-goal">İxtisar texnikası və mürəkkəb kəsr ifadələri</td></tr>
+            <tr><td class="col-no">8</td><td class="col-date">07.09.2026</td><td class="col-day">I</td><td class="col-topic">Onluq kəsrlər və mərtəbə vahidlərinə vurma/bölmə</td><td class="col-goal">Vergüllə hesablamalarda səhvlərin aradan qaldırılması</td></tr>
+            <tr><td class="col-no">9</td><td class="col-date">11.09.2026</td><td class="col-day">V</td><td class="col-topic">Adi və onluq kəsrlərin müqayisəsi və birgə əməllər</td><td class="col-goal">Qarışıq kəsr ifadələrinin sadələşdirilməsi</td></tr>
+            <tr><td class="col-no">10</td><td class="col-date">14.09.2026</td><td class="col-day">I</td><td class="col-topic">Mətnli kəsr məsələləri (Hissə məsələləri)</td><td class="col-goal">Hissəyə görə ədədin və ədədə görə hissənin tapılması</td></tr>
+            <tr><td class="col-no">11</td><td class="col-date">18.09.2026</td><td class="col-day">V</td><td class="col-topic">Nisbət və Tənasübün əsas xassəsi</td><td class="col-goal">Mütənasiblik anlayışının mənimsənilməsi</td></tr>
+            <tr><td class="col-no">12</td><td class="col-date">21.09.2026</td><td class="col-day">I</td><td class="col-topic">Düz və tərs mütənasib kəmiyyətlər</td><td class="col-goal">Mütənasib bölgülərə aid praktiki məsələlər</td></tr>
+            <tr><td class="col-no">13</td><td class="col-date">25.09.2026</td><td class="col-day">V</td><td class="col-topic">Faiz anlayışı: Ədədin faizinin tapılması</td><td class="col-goal">Vizual faiz modelləri və praktik hesablamalar</td></tr>
+            <tr><td class="col-no">14</td><td class="col-date">28.09.2026</td><td class="col-day">I</td><td class="col-topic">Faizə aid əsas məsələ tipləri</td><td class="col-goal">Qiymət dəyişməsi, artım və azalma məsələləri</td></tr>
+            <tr><td class="col-no">15</td><td class="col-date">02.10.2026</td><td class="col-day">V</td><td class="col-topic">Qarışıq, məhlul və faiz məsələləri</td><td class="col-goal">Məntiqi matrislərlə məhlul məsələlərinin həlli</td></tr>
+            <tr><td class="col-no">16</td><td class="col-date">05.10.2026</td><td class="col-day">I</td><td class="col-topic">I Bölmə üzrə təkrar və aralıq qiymətləndirmə</td><td class="col-goal">Ədədlər və hissələr bölməsinin möhkəmləndirilməsi</td></tr>
+            <tr><td class="col-no">17</td><td class="col-date">09.10.2026</td><td class="col-day">V</td><td class="col-topic">Mənfi ədədlər və ədəd oxu</td><td class="col-goal">Modul və əks ədəd anlayışı</td></tr>
+            <tr><td class="col-no">18</td><td class="col-date">12.10.2026</td><td class="col-day">I</td><td class="col-topic">Müsbət və mənfi ədədlər üzərində əməllər</td><td class="col-goal">Mənfi işarələrlə iş zamanı yaranan boşluqların aradan qaldırılması</td></tr>
+            <tr><td class="col-no">19</td><td class="col-date">16.10.2026</td><td class="col-day">V</td><td class="col-topic">Mötərizələrin açılması və oxşar hədlərin islahı</td><td class="col-goal">Cəbri ifadələrlə işin başlanğıcı</td></tr>
+            <tr><td class="col-no">20</td><td class="col-date">19.10.2026</td><td class="col-day">I</td><td class="col-topic">Birhədli və çoxhədli anlayışı</td><td class="col-goal">İfadələrin standart şəklə gətirilməsi</td></tr>
+            <tr><td class="col-no">21</td><td class="col-date">23.10.2026</td><td class="col-day">V</td><td class="col-topic">Müxtəsər vurma düsturları: Kvadratlar cəmi və fərqi</td><td class="col-goal">Düsturların vizual (həndəsi) sübutu və tətbiqi</td></tr>
+            <tr><td class="col-no">22</td><td class="col-date">26.10.2026</td><td class="col-day">I</td><td class="col-topic">Müxtəsər vurma düsturları: Kublar cəmi və fərqi</td><td class="col-goal">İfadələrin vuruqlara ayrılması üsulları</td></tr>
+            <tr><td class="col-no">23</td><td class="col-date">30.10.2026</td><td class="col-day">V</td><td class="col-topic">Vuruqlara ayırmanın müxtəlif üsulları</td><td class="col-goal">Ortaq vuruğun çıxarılması və qruplaşdırma</td></tr>
+            <tr><td class="col-no">24</td><td class="col-date">02.11.2026</td><td class="col-day">I</td><td class="col-topic">Bir dəyişənli xətti tənliklər</td><td class="col-goal">Tənlik həllində əsas alqoritmlər</td></tr>
+            <tr><td class="col-no">25</td><td class="col-date">06.11.2026</td><td class="col-day">V</td><td class="col-topic">Mürəkkəb yapılı xətti tənliklər</td><td class="col-goal">Mötərizəli və kəsr əmsallı tənliklər</td></tr>
+            <tr><td class="col-no">26</td><td class="col-date">09.11.2026</td><td class="col-day">I</td><td class="col-topic">Tənlik qurmaqla məsələ həlli: Yaş məsələləri</td><td class="col-goal">Modelləşdirmə bacarığının inkişafı</td></tr>
+            <tr><td class="col-no">27</td><td class="col-date">13.11.2026</td><td class="col-day">V</td><td class="col-topic">Tənlik qurmaqla məsələ həlli: Hərəkət məsələləri</td><td class="col-goal">Sürət, zaman və yol asılılıqları</td></tr>
+            <tr><td class="col-no">28</td><td class="col-date">16.11.2026</td><td class="col-day">I</td><td class="col-topic">Tənlik qurmaqla məsələ həlli: İş və hovuz məsələləri</td><td class="col-goal">Birgə iş zamanı məhsuldarlıq hesablamaları</td></tr>
+            <tr><td class="col-no">29</td><td class="col-date">20.11.2026</td><td class="col-day">V</td><td class="col-topic">İkidəyişənli xətti tənliklər sistemi: Əvəzetmə üsulu</td><td class="col-goal">Sistem tənliklərin məntiqi təməli</td></tr>
+            <tr><td class="col-no">30</td><td class="col-date">23.11.2026</td><td class="col-day">I</td><td class="col-topic">İkidəyişənli xətti tənliklər sistemi: Toplama üsulu</td><td class="col-goal">Əmsalların bərabərləşdirilməsi texnikası</td></tr>
+            <tr><td class="col-no">31</td><td class="col-date">27.11.2026</td><td class="col-day">V</td><td class="col-topic">Sistem tənliklərlə məsələ həlli</td><td class="col-goal">İki məchullu həyati situasiya məsələləri</td></tr>
+            <tr><td class="col-no">32</td><td class="col-date">30.11.2026</td><td class="col-day">I</td><td class="col-topic">II Bölmə üzrə təkrar və aralıq sınağı</td><td class="col-goal">Cəbr və tənliklər mövzusunun yekunlaşdırılması</td></tr>
+            <tr><td class="col-no">33</td><td class="col-date">04.12.2026</td><td class="col-day">V</td><td class="col-topic">Kvadrat kök və hesabi kvadrat kök anlayışı</td><td class="col-goal">İrrasional ədəd anlayışı və təxmini kökalma</td></tr>
+            <tr><td class="col-no">34</td><td class="col-date">07.12.2026</td><td class="col-day">I</td><td class="col-topic">Kökaltı ifadələrin çevrilməsi</td><td class="col-goal">Vuruğun kök altına salınması və çıxarılması</td></tr>
+            <tr><td class="col-no">35</td><td class="col-date">11.12.2026</td><td class="col-day">V</td><td class="col-topic">İrrasional ifadələrdə məxrəcin rasionallaşdırılması</td><td class="col-goal">Qoşma ifadəyə vurma texnikası</td></tr>
+            <tr><td class="col-no">36</td><td class="col-date">14.12.2026</td><td class="col-day">I</td><td class="col-topic">Kvadrat tənliklər: Diskriminant düsturu</td><td class="col-goal">Tam və natamam kvadrat tənliklər</td></tr>
+            <tr><td class="col-no">37</td><td class="col-date">18.12.2026</td><td class="col-day">V</td><td class="col-topic">Viyet teoremi və tətbiqləri</td><td class="col-goal">Şifahi kök tapma bacarığının inkişafı</td></tr>
+            <tr><td class="col-no">38</td><td class="col-date">21.12.2026</td><td class="col-day">I</td><td class="col-topic">Kvadrat tənliyə gətirilən tənliklər</td><td class="col-goal">Əvəzetmə üsulu ilə bikvadrat tənliklər</td></tr>
+            <tr><td class="col-no">39</td><td class="col-date">25.12.2026</td><td class="col-day">V</td><td class="col-topic">Ədədi bərabərsizliklər və xassələri</td><td class="col-goal">Bərabərsizliklərin toplanması və vurulması</td></tr>
+            <tr><td class="col-no">40</td><td class="col-date">28.12.2026</td><td class="col-day">I</td><td class="col-topic">Bir dəyişənli xətti bərabərsizliklər</td><td class="col-goal">Ədəd oxunda intervalların təsviri</td></tr>
+            <tr><td class="col-no">41</td><td class="col-date">01.01.2027</td><td class="col-day">V</td><td class="col-topic">Bərabərsizliklər sistemi</td><td class="col-goal">İki bərabərsizliyin kəsişməsinin tapılması</td></tr>
+            <tr><td class="col-no">42</td><td class="col-date">04.01.2027</td><td class="col-day">I</td><td class="col-topic">Modul tənlik və bərabərsizliklər</td><td class="col-goal">Mütləq qiymət daxilində dəyişəni olan tiplər</td></tr>
+            <tr><td class="col-no">43</td><td class="col-date">08.01.2027</td><td class="col-day">V</td><td class="col-topic">İntervallar üsulu</td><td class="col-goal">Çoxhədlilərin işarə sabitliyi intervalları</td></tr>
+            <tr><td class="col-no">44</td><td class="col-date">11.01.2027</td><td class="col-day">I</td><td class="col-topic">Funksiya anlayışı və asılılıqlar</td><td class="col-goal">Asılı və asılı olmayan dəyişən, təyin vilayəti</td></tr>
+            <tr><td class="col-no">45</td><td class="col-date">15.01.2027</td><td class="col-day">V</td><td class="col-topic">Xətti funksiya və onun qrafiki</td><td class="col-goal">Bucaqlı əmsalı və oxlarla kəsişmə nöqtələri</td></tr>
+            <tr><td class="col-no">46</td><td class="col-date">18.01.2027</td><td class="col-day">I</td><td class="col-topic">Kvadratik funksiya və parabola</td><td class="col-goal">Təpə nöqtəsinin koordinatları və simmetriya oxu</td></tr>
+            <tr><td class="col-no">47</td><td class="col-date">22.01.2027</td><td class="col-day">V</td><td class="col-topic">Funksiya qrafiklərinin oxunması</td><td class="col-goal">Qrafik əsasında məsələ həlli və təhlil</td></tr>
+            <tr><td class="col-no">48</td><td class="col-date">25.01.2027</td><td class="col-day">I</td><td class="col-topic">III Bölmə üzrə təkrar və sınaq</td><td class="col-goal">Kök, bərabərsizlik və funksiyaların təkrarı</td></tr>
+            <tr><td class="col-no">49</td><td class="col-date">29.01.2027</td><td class="col-day">V</td><td class="col-topic">Həndəsə: Nöqtə, düz xətt, parça və şüa</td><td class="col-goal">Əsas anlayışlar və parça toplanması</td></tr>
+            <tr><td class="col-no">50</td><td class="col-date">01.02.2027</td><td class="col-day">I</td><td class="col-topic">Həndəsə: Bucaqlar və növləri</td><td class="col-goal">Qonşu və qarşılıqlı bucaqların xassələri</td></tr>
+            <tr><td class="col-no">51</td><td class="col-date">05.02.2027</td><td class="col-day">V</td><td class="col-topic">Paralel düz xətlərin üçüncü ilə kəsişməsi</td><td class="col-goal">Daxili və xarici çarpaz, birtərəfli bucaqlar</td></tr>
+            <tr><td class="col-no">52</td><td class="col-date">08.02.2027</td><td class="col-day">I</td><td class="col-topic">Üçbucaqlar: Əsas elementləri və növləri</td><td class="col-goal">Median, tənbölən və hündürlük fərqləri</td></tr>
+            <tr><td class="col-no">53</td><td class="col-date">12.02.2027</td><td class="col-day">V</td><td class="col-topic">Üçbucağın bucaqlarının cəmi və xarici bucaq</td><td class="col-goal">Bucaq münasibətləri və üçbucaq bərabərsizliyi</td></tr>
+            <tr><td class="col-no">54</td><td class="col-date">15.02.2027</td><td class="col-day">I</td><td class="col-topic">Bərabəryanlı və bərabərtərəfli üçbucaq</td><td class="col-goal">Oturacağa çəkilmiş medianın xassəsi</td></tr>
+            <tr><td class="col-no">55</td><td class="col-date">19.02.2027</td><td class="col-day">V</td><td class="col-topic">Düzbucaqlı üçbucaq və Pifaqor teoremi</td><td class="col-goal">30°-li və 45°-li bucaq qarşısındakı katet xassəsi</td></tr>
+            <tr><td class="col-no">56</td><td class="col-date">22.02.2027</td><td class="col-day">I</td><td class="col-topic">Üçbucaqların bərabərlik (konqruyentlik) əlamətləri</td><td class="col-goal">Təriflər və isbat elementləri</td></tr>
+            <tr><td class="col-no">57</td><td class="col-date">26.02.2027</td><td class="col-day">V</td><td class="col-topic">Üçbucaqların oxşarlığı</td><td class="col-goal">Oxşarlıq əmsalı və mütənasib parçalar</td></tr>
+            <tr><td class="col-no">58</td><td class="col-date">01.03.2027</td><td class="col-day">I</td><td class="col-topic">Dördbucaqlılar: Qabarıq çoxbucaqlılar</td><td class="col-goal">Daxili bucaqların cəmi düsturu</td></tr>
+            <tr><td class="col-no">59</td><td class="col-date">05.03.2027</td><td class="col-day">V</td><td class="col-topic">Paraleloqram və onun xassələri</td><td class="col-goal">Tərəf və diaqonal münasibətləri</td></tr>
+            <tr><td class="col-no">60</td><td class="col-date">08.03.2027</td><td class="col-day">I</td><td class="col-topic">Romb, Düzbucaqlı və Kvadrat</td><td class="col-goal">Xüsusi paraleloqramların fərqli xassələri</td></tr>
+            <tr><td class="col-no">61</td><td class="col-date">12.03.2027</td><td class="col-day">V</td><td class="col-topic">Trapesiya və onun orta xətti</td><td class="col-goal">Bərabəryanlı və düzbucaqlı trapesiya</td></tr>
+            <tr><td class="col-no">62</td><td class="col-date">15.03.2027</td><td class="col-day">I</td><td class="col-topic">Çevrə və Dairə: Vətər, toxunan, kəsən</td><td class="col-goal">Toxunanın xassəsi və mərkəzi bucaq</td></tr>
+            <tr><td class="col-no">63</td><td class="col-date">19.03.2027</td><td class="col-day">V</td><td class="col-topic">Çevrədə daxilə çəkilmiş bucaq və dərəcə ölçüsü</td><td class="col-goal">Qövs və bucaq arasındakı asılılıqlar</td></tr>
+            <tr><td class="col-no">64</td><td class="col-date">22.03.2027</td><td class="col-day">I</td><td class="col-topic">Fiqurların sahəsi: Düzbucaqlı və Paraleloqram</td><td class="col-goal">Səth ölçüləri və sahə düsturları</td></tr>
+            <tr><td class="col-no">65</td><td class="col-date">26.03.2027</td><td class="col-day">V</td><td class="col-topic">Fiqurların sahəsi: Üçbucaq və Trapesiyanın sahəsi</td><td class="col-goal">Sahə düsturlarının tətbiqi məsələləri</td></tr>
+            <tr><td class="col-no">66</td><td class="col-date">29.03.2027</td><td class="col-day">I</td><td class="col-topic">Fəzavi fiqurlar (Stereometriyaya giriş)</td><td class="col-goal">Kub və paralelepipedin həcmi və tam səthi</td></tr>
+            <tr><td class="col-no">67</td><td class="col-date">02.04.2027</td><td class="col-day">V</td><td class="col-topic">Məntiq və İntellektual məsələlər</td><td class="col-goal">Həndəsi və ədədi qanunauyğunluqlar</td></tr>
+            <tr><td class="col-no">68</td><td class="col-date">05.04.2027</td><td class="col-day">I</td><td class="col-topic">Mətnli mürəkkəb məntiq məsələləri</td><td class="col-goal">Analitik düşüncə məşğələsi</td></tr>
+            <tr><td class="col-no">69</td><td class="col-date">09.04.2027</td><td class="col-day">V</td><td class="col-topic">Kombinatorika və Ehtimal təməlləri</td><td class="col-goal">Hadisələrin ehtimalının hesablanması</td></tr>
+            <tr><td class="col-no">70</td><td class="col-date">12.04.2027</td><td class="col-day">I</td><td class="col-topic">Statistika: Ədədi orta, mediana, moda</td><td class="col-goal">Data analizi və diaqramlarla iş</td></tr>
+            <tr><td class="col-no">71</td><td class="col-date">16.04.2027</td><td class="col-day">V</td><td class="col-topic">İllik keçilənlərin ümumi təkrarı - 1</td><td class="col-goal">Cəbr bölməsi üzrə ümumiləşdirmə</td></tr>
+            <tr><td class="col-no">72</td><td class="col-date">19.04.2027</td><td class="col-day">I</td><td class="col-topic">Yekun qiymətləndirmə sınağı</td><td class="col-goal">İllik biliklərin təyin olunması və qiymətləndirmə</td></tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

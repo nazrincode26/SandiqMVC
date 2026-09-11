@@ -53,6 +53,34 @@ namespace SandiqMVC
 
             var app = builder.Build();
 
+            using (var scope = app.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<SandiqMvcDbContext>();
+                try
+                {
+                    if (!db.SearchKeywords.Any())
+                    {
+                        foreach (var (keyword, lang, categoryIds) in SearchKeywordSeedData.Entries)
+                        {
+                            foreach (var categoryId in categoryIds)
+                            {
+                                db.SearchKeywords.Add(new Models.SearchKeyword
+                                {
+                                    Keyword = keyword.ToLowerInvariant(),
+                                    Lang = lang,
+                                    CategoryId = categoryId
+                                });
+                            }
+                        }
+                        db.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    app.Logger.LogWarning(ex, "Could not seed search keywords (has the migration been applied?)");
+                }
+            }
+
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");

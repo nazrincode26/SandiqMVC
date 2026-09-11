@@ -24,6 +24,7 @@ namespace SandiqMVC.Controllers
                 Products = await _context.Products
                     .Where(p => p.Status == "approved")
                     .Include(p => p.Category)
+                    .OrderBy(p => p.Title)
                     .ToListAsync()
             };
 

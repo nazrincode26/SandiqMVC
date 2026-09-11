@@ -1,0 +1,147 @@
+@{
+    ViewData["Title"] = "Sifarişi tamamla";
+    var cards = ViewBag.PaymentCards as List<SandiqMVC.Models.PaymentCard> ?? new List<SandiqMVC.Models.PaymentCard>();
+}
+
+<div class="checkout-page">
+    <h2 class="checkout-page__title">Sifarişi tamamla</h2>
+
+    <partial name="_CheckoutSteps" model="1" />
+
+    <div class="checkout-grid">
+        <section class="checkout-card">
+            <h3>Sifariş xülasəsi</h3>
+            <div id="checkoutItems" class="checkout-items"></div>
+            <div class="checkout-summary-row">
+                <span>Cəmi</span>
+                <strong id="checkoutTotal">0 ₼</strong>
+            </div>
+        </section>
+
+        <section class="checkout-card">
+            <h3>Ödəniş məlumatları</h3>
+            <p class="checkout-hint">Aşağıdakı kartlardan birinə ümumi məbləği köçürün. Köçürmədən sonra "Ödədim" düyməsini basın — sifarişiniz admin tərəfindən yoxlanılıb təsdiqlənəcək.</p>
+
+            @if (!cards.Any())
+            {
+                <p class="checkout-hint" style="color:var(--color-danger);">Hazırda aktiv ödəniş kartı yoxdur. Zəhmət olmasa əlaqə saxlayın.</p>
+            }
+            else
+            {
+                <div class="checkout-cards">
+                    @foreach (var card in cards)
+                    {
+                        <div class="checkout-payment-card">
+                            <div class="checkout-payment-card__bank">@card.BankName</div>
+                            <div class="checkout-payment-card__number" data-copy="@card.CardNumber">
+                                @card.CardNumber
+                                <button type="button" class="checkout-copy-btn" data-copy="@card.CardNumber" title="Kopyala">Kopyala</button>
+                            </div>
+                            <div class="checkout-payment-card__holder">@card.CardHolderName</div>
+                        </div>
+                    }
+                </div>
+            }
+
+            <label class="checkout-confirm-check">
+                <input type="checkbox" id="paidCheckbox" />
+                <span>Yuxarıdakı kartlardan birinə köçürməni etdim</span>
+            </label>
+
+            <button type="button" id="placeOrderBtn" class="checkout-place-btn" disabled>Ödədim, sifarişi göndər</button>
+            <p class="checkout-security-note">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                Sifarişiniz qeydə alınır və admin ödənişi təsdiqlədikdən sonra satıcı ilə əlaqə saxlanılır.
+            </p>
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="module">
+        import { t } from "/assets/js/i18n-utils.js";
+
+        const items = getCart();
+        const itemsEl = document.getElementById("checkoutItems");
+        const totalEl = document.getElementById("checkoutTotal");
+        const paidCheckbox = document.getElementById("paidCheckbox");
+        const placeOrderBtn = document.getElementById("placeOrderBtn");
+
+        if (items.length === 0) {
+            itemsEl.innerHTML = "<p>Səbətiniz boşdur.</p>";
+            placeOrderBtn.disabled = true;
+        } else {
+            itemsEl.innerHTML = items.map((item) => `
+                <div class="checkout-item">
+                    <span class="checkout-item__title">${item.title} <span class="checkout-item__qty">× ${item.quantity}</span></span>
+                    <span>${formatPrice(item.price * item.quantity)}</span>
+                </div>
+            `).join("");
+
+            totalEl.textContent = formatPrice(getCartTotal());
+        }
+
+        const step1El = document.querySelector('.checkout-step[data-step="1"]');
+        const step2El = document.querySelector('.checkout-step[data-step="2"]');
+
+        paidCheckbox.addEventListener("change", () => {
+            placeOrderBtn.disabled = !paidCheckbox.checked || items.length === 0;
+
+            if (paidCheckbox.checked) {
+                step1El.classList.remove("checkout-step--active");
+                step1El.classList.add("checkout-step--done");
+                step1El.querySelector(".checkout-step__num").textContent = "✓";
+                step2El.classList.add("checkout-step--active");
+            } else {
+                step1El.classList.add("checkout-step--active");
+                step1El.classList.remove("checkout-step--done");
+                step1El.querySelector(".checkout-step__num").textContent = "1";
+                step2El.classList.remove("checkout-step--active");
+            }
+        });
+
+        document.querySelectorAll(".checkout-copy-btn").forEach((btn) => {
+            btn.addEventListener("click", async () => {
+                await navigator.clipboard.writeText(btn.dataset.copy);
+                const original = btn.textContent;
+                btn.textContent = "Kopyalandı!";
+                setTimeout(() => { btn.textContent = original; }, 1500);
+            });
+        });
+
+        placeOrderBtn.addEventListener("click", async () => {
+            placeOrderBtn.disabled = true;
+            placeOrderBtn.textContent = "Göndərilir...";
+
+            try {
+                const response = await fetch("/Cart/PlaceOrder", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        items: items.map((i) => ({ productId: i.productId, quantity: i.quantity })),
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    showToast(data.message || "Xəta baş verdi, yenidən cəhd edin");
+                    placeOrderBtn.disabled = false;
+                    placeOrderBtn.textContent = "Ödədim, sifarişi göndər";
+                    return;
+                }
+
+                if (data.skippedOwnListings > 0) {
+                    showToast("Öz elanınız səbətdən çıxarıldı, ona görə sifarişə daxil edilmədi");
+                }
+
+                localStorage.removeItem("cart");
+                window.location.href = `/Cart/OrderConfirmation/${data.orderId}`;
+            } catch (err) {
+                showToast("Xəta baş verdi, yenidən cəhd edin");
+                placeOrderBtn.disabled = false;
+                placeOrderBtn.textContent = "Ödədim, sifarişi göndər";
+            }
+        });
+    </script>
+}

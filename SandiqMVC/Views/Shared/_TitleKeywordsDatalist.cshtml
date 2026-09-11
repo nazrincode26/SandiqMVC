@@ -1,0 +1,16 @@
+@using Microsoft.EntityFrameworkCore
+@inject SandiqMVC.DAL.SandiqMvcDbContext DbContext
+@{
+    var titleKeywords = await DbContext.SearchKeywords
+        .Where(k => k.Lang == "az")
+        .Select(k => k.Keyword)
+        .Distinct()
+        .OrderBy(k => k)
+        .ToListAsync();
+}
+<datalist id="titleKeywords">
+    @foreach (var keyword in titleKeywords)
+    {
+        <option value="@keyword"></option>
+    }
+</datalist>

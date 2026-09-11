@@ -166,6 +166,7 @@ export const ru = {
   filter_condition_label: "Состояние",
   filter_all_conditions: "Все",
   filter_sort_label: "Сортировать",
+  sort_alpha: "По алфавиту",
   sort_newest: "Сначала новые",
   sort_oldest: "Сначала старые",
   sort_price_asc: "Цена: сначала дешевле",

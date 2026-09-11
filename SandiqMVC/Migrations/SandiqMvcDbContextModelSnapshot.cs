@@ -76,6 +76,9 @@ namespace SandiqMVC.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImagesJson")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
 
@@ -112,6 +115,118 @@ namespace SandiqMVC.Migrations
                     b.HasIndex("RequestedByUserId");
 
                     b.ToTable("ListingRequests");
+                });
+
+            modelBuilder.Entity("SandiqMVC.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BuyerUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ConfirmedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("PlatformFeeAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("SellerPayoutAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BuyerUserId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("SandiqMVC.Models.OrderItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("PlatformFeeAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("SellerAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("SellerUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("SellerUserId");
+
+                    b.ToTable("OrderItems");
+                });
+
+            modelBuilder.Entity("SandiqMVC.Models.PaymentCard", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BankName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CardHolderName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CardNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PaymentCards");
                 });
 
             modelBuilder.Entity("SandiqMVC.Models.Product", b =>
@@ -174,6 +289,31 @@ namespace SandiqMVC.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("SandiqMVC.Models.ProductImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductImages");
+                });
+
             modelBuilder.Entity("SandiqMVC.Models.ProductReview", b =>
                 {
                     b.Property<int>("Id")
@@ -204,6 +344,32 @@ namespace SandiqMVC.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("ProductReviews");
+                });
+
+            modelBuilder.Entity("SandiqMVC.Models.SearchKeyword", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Keyword")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Lang")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("SearchKeywords");
                 });
 
             modelBuilder.Entity("SandiqMVC.Models.SellerReview", b =>
@@ -306,6 +472,44 @@ namespace SandiqMVC.Migrations
                     b.Navigation("RequestedBy");
                 });
 
+            modelBuilder.Entity("SandiqMVC.Models.Order", b =>
+                {
+                    b.HasOne("SandiqMVC.Models.User", "Buyer")
+                        .WithMany()
+                        .HasForeignKey("BuyerUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Buyer");
+                });
+
+            modelBuilder.Entity("SandiqMVC.Models.OrderItem", b =>
+                {
+                    b.HasOne("SandiqMVC.Models.Order", "Order")
+                        .WithMany("Items")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SandiqMVC.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SandiqMVC.Models.User", "Seller")
+                        .WithMany()
+                        .HasForeignKey("SellerUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Seller");
+                });
+
             modelBuilder.Entity("SandiqMVC.Models.Product", b =>
                 {
                     b.HasOne("SandiqMVC.Models.Category", "Category")
@@ -332,6 +536,17 @@ namespace SandiqMVC.Migrations
                     b.Navigation("SubmittedBy");
                 });
 
+            modelBuilder.Entity("SandiqMVC.Models.ProductImage", b =>
+                {
+                    b.HasOne("SandiqMVC.Models.Product", "Product")
+                        .WithMany("Images")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("SandiqMVC.Models.ProductReview", b =>
                 {
                     b.HasOne("SandiqMVC.Models.Product", "Product")
@@ -349,6 +564,17 @@ namespace SandiqMVC.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SandiqMVC.Models.SearchKeyword", b =>
+                {
+                    b.HasOne("SandiqMVC.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("SandiqMVC.Models.SellerReview", b =>
@@ -375,8 +601,15 @@ namespace SandiqMVC.Migrations
                     b.Navigation("Subcategories");
                 });
 
+            modelBuilder.Entity("SandiqMVC.Models.Order", b =>
+                {
+                    b.Navigation("Items");
+                });
+
             modelBuilder.Entity("SandiqMVC.Models.Product", b =>
                 {
+                    b.Navigation("Images");
+
                     b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618

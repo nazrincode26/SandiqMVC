@@ -14,7 +14,7 @@
         <span asp-validation-for="FullName" class="text-danger field-validation-error"></span>
         <input asp-for="Email" data-i18n-placeholder="email_placeholder" placeholder="E-poçt" />
         <span asp-validation-for="Email" class="text-danger field-validation-error"></span>
-        <input asp-for="Phone" type="tel" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9+]/g, '')" data-i18n-placeholder="phone_placeholder" placeholder="Telefon nömrəsi" />
+        <input asp-for="Phone" id="phoneInput" type="tel" inputmode="numeric" placeholder="+994 XX XXX XX XX" />
         <span asp-validation-for="Phone" class="text-danger field-validation-error"></span>
         <input asp-for="Password" data-i18n-placeholder="password_placeholder" placeholder="Şifrə" />
         <span asp-validation-for="Password" class="text-danger field-validation-error"></span>
@@ -29,6 +29,9 @@
     <partial name="_ValidationScriptsPartial" />
     <script type="module">
         import { getLang } from "/assets/js/i18n-utils.js";
+        import { setupAzPhoneInput } from "/assets/js/phone-input.js";
+
+        setupAzPhoneInput(document.getElementById("phoneInput"));
 
         function loadGoogleScript(locale) {
         return new Promise((resolve) => {

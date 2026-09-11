@@ -32,7 +32,7 @@
 
     <label>
         <span data-i18n="phone_label">Telefon</span>
-        <input asp-for="Phone" type="tel" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9+]/g, '')" placeholder="+994 XX XXX XX XX" />
+        <input asp-for="Phone" id="phoneInput" type="tel" inputmode="numeric" placeholder="+994 XX XXX XX XX" />
         <span asp-validation-for="Phone" class="text-danger field-validation-error"></span>
     </label>
 
@@ -41,4 +41,8 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script type="module">
+        import { setupAzPhoneInput } from "/assets/js/phone-input.js";
+        setupAzPhoneInput(document.getElementById("phoneInput"));
+    </script>
 }

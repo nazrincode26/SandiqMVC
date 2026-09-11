@@ -18,11 +18,33 @@
         var rounded = r.HasValue ? (int)Math.Round(r.Value) : 0;
         return new string('★', rounded) + new string('☆', 5 - rounded);
     };
+
+    var galleryImages = Model.Images.Any()
+        ? Model.Images.OrderBy(i => i.SortOrder).Select(i => i.Path).ToList()
+        : (Model.Image != null ? new List<string> { Model.Image } : new List<string>());
 }
 
-<div class="product-detail" data-id="@Model.Id" data-title="@Model.Title" data-price="@Model.Price">
-    <div class="product-detail__image">
-        <div style="width:100%;aspect-ratio:1/1;background:#EFE6D6;border-radius:8px;"></div>
+<div class="product-detail" data-id="@Model.Id" data-title="@Model.Title" data-price="@Model.Price" data-image="@Model.Image">
+    <div class="product-detail__gallery">
+        <div class="product-detail__image">
+            @if (galleryImages.Any())
+            {
+                <img id="mainProductImage" src="@galleryImages[0]" alt="@Model.Title" style="width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:8px;" />
+            }
+            else
+            {
+                <div style="width:100%;aspect-ratio:1/1;background:#EFE6D6;border-radius:8px;"></div>
+            }
+        </div>
+        @if (galleryImages.Count > 1)
+        {
+            <div class="product-detail__thumbs">
+                @foreach (var img in galleryImages)
+                {
+                    <img src="@img" alt="@Model.Title" class="product-detail__thumb" />
+                }
+            </div>
+        }
     </div>
     <div class="product-detail__info">
         <h1>@Model.Title</h1>
@@ -50,7 +72,14 @@
             }
         </ul>
         <div class="product-detail__actions">
-            <button type="button" id="detailCartBtn" data-i18n="add_to_cart">Səbətə at</button>
+            @if (isOwner)
+            {
+                <button type="button" disabled title="Öz elanınızı ala bilməzsiniz">Öz elanınızdır</button>
+            }
+            else
+            {
+                <button type="button" id="detailCartBtn" data-i18n="add_to_cart">Səbətə at</button>
+            }
             <button type="button" id="detailFavBtn">♥ <span data-i18n="add_to_favorites">Favorilərə əlavə et</span></button>
         </div>
     </div>
@@ -171,17 +200,27 @@
                 id: Number(container.dataset.id),
                 title: container.dataset.title,
                 price: Number(container.dataset.price),
-                image: null,
+                image: container.dataset.image || null,
             };
+
+            const mainImage = document.getElementById("mainProductImage");
+            document.querySelectorAll(".product-detail__thumb").forEach((thumb) => {
+                thumb.addEventListener("click", () => {
+                    if (mainImage) mainImage.src = thumb.src;
+                });
+            });
 
             const favBtn = document.getElementById("detailFavBtn");
             if (isFavorite(product.id)) favBtn.classList.add("active");
 
-            document.getElementById("detailCartBtn").addEventListener("click", () => {
-                addToCart(product);
-                updateHeaderBadges();
-                showToast(t("cart_added_alert"));
-            });
+            const cartBtn = document.getElementById("detailCartBtn");
+            if (cartBtn) {
+                cartBtn.addEventListener("click", () => {
+                    addToCart(product);
+                    updateHeaderBadges();
+                    showToast(t("cart_added_alert"));
+                });
+            }
 
             favBtn.addEventListener("click", () => {
                 toggleFavorite(product);

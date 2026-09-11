@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace SandiqMVC.Areas.Admin.ViewModels;
 
 public class AdminListingViewModel
 {
     public int Id { get; set; }
+    public List<IFormFile>? ImageFiles { get; set; }
 
     [Required]
     public string Title { get; set; } = string.Empty;

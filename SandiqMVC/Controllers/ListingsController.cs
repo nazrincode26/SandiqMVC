@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -41,6 +42,35 @@ public class ListingsController : Controller
         return $"/uploads/products/{fileName}";
     }
 
+    private async Task<List<string>> SaveImagesAsync(List<IFormFile>? imageFiles)
+    {
+        var paths = new List<string>();
+        if (imageFiles == null)
+        {
+            return paths;
+        }
+
+        foreach (var file in imageFiles.Take(Product.MaxImages))
+        {
+            var path = await SaveImageAsync(file);
+            if (path != null)
+            {
+                paths.Add(path);
+            }
+        }
+
+        return paths;
+    }
+
+    private async Task<bool> IsValidTitleAsync(string? title)
+    {
+        if (string.IsNullOrWhiteSpace(title)) return false;
+
+        var normalized = title.Trim();
+        var keywords = await _context.SearchKeywords.Where(k => k.Lang == "az").Select(k => k.Keyword).ToListAsync();
+        return keywords.Contains(normalized, StringComparer.OrdinalIgnoreCase);
+    }
+
     [HttpGet]
     public async Task<IActionResult> Create()
     {
@@ -61,6 +91,16 @@ public class ListingsController : Controller
             ModelState.AddModelError(string.Empty, "Zəhmət olmasa elan paylaşma şərtlərini oxuyub qəbul edin.");
         }
 
+        if (model.ImageFiles != null && model.ImageFiles.Count > Product.MaxImages)
+        {
+            ModelState.AddModelError(string.Empty, $"Maksimum {Product.MaxImages} şəkil yükləyə bilərsiniz.");
+        }
+
+        if (!string.IsNullOrWhiteSpace(model.Title) && !await IsValidTitleAsync(model.Title))
+        {
+            ModelState.AddModelError(nameof(model.Title), "Başlıq yalnız siyahıdakı açar sözlərdən biri ola bilər.");
+        }
+
         if (!ModelState.IsValid)
         {
             model.Categories = await _context.Categories.Where(c => c.ParentId == null).Include(c => c.Subcategories).ToListAsync();
@@ -68,6 +108,7 @@ public class ListingsController : Controller
         }
 
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var imagePaths = await SaveImagesAsync(model.ImageFiles);
 
         var product = new Product
         {
@@ -78,10 +119,15 @@ public class ListingsController : Controller
             SubcategoryId = model.SubcategoryId,
             Condition = model.Condition,
             Location = model.Location,
-            Image = await SaveImageAsync(model.ImageFile),
+            Image = imagePaths.FirstOrDefault(),
             SubmittedByUserId = userId,
             Status = "pending"
         };
+
+        for (var i = 0; i < imagePaths.Count; i++)
+        {
+            product.Images.Add(new ProductImage { Path = imagePaths[i], SortOrder = i });
+        }
 
         _context.Products.Add(product);
         await _context.SaveChangesAsync();
@@ -112,7 +158,9 @@ public class ListingsController : Controller
     public async Task<IActionResult> Edit(int id)
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id && p.SubmittedByUserId == userId);
+        var product = await _context.Products
+            .Include(p => p.Images)
+            .FirstOrDefaultAsync(p => p.Id == id && p.SubmittedByUserId == userId);
         if (product == null) return NotFound();
 
         var model = new SandiqMVC.ViewModels.EditListingViewModel
@@ -125,11 +173,21 @@ public class ListingsController : Controller
             SubcategoryId = product.SubcategoryId,
             Condition = product.Condition ?? "used",
             Location = product.Location,
-            ExistingImage = product.Image,
+            ExistingImages = GetProductImagePaths(product),
             Categories = await _context.Categories.Where(c => c.ParentId == null).Include(c => c.Subcategories).ToListAsync()
         };
 
         return View(model);
+    }
+
+    private static List<string> GetProductImagePaths(Product product)
+    {
+        if (product.Images.Any())
+        {
+            return product.Images.OrderBy(i => i.SortOrder).Select(i => i.Path).ToList();
+        }
+
+        return product.Image != null ? new List<string> { product.Image } : new List<string>();
     }
 
     [Authorize]
@@ -137,12 +195,24 @@ public class ListingsController : Controller
     public async Task<IActionResult> Edit(SandiqMVC.ViewModels.EditListingViewModel model)
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == model.Id && p.SubmittedByUserId == userId);
+        var product = await _context.Products
+            .Include(p => p.Images)
+            .FirstOrDefaultAsync(p => p.Id == model.Id && p.SubmittedByUserId == userId);
         if (product == null) return NotFound();
+
+        if (model.ImageFiles != null && model.ImageFiles.Count > Product.MaxImages)
+        {
+            ModelState.AddModelError(string.Empty, $"Maksimum {Product.MaxImages} şəkil yükləyə bilərsiniz.");
+        }
+
+        if (!string.IsNullOrWhiteSpace(model.Title) && !await IsValidTitleAsync(model.Title))
+        {
+            ModelState.AddModelError(nameof(model.Title), "Başlıq yalnız siyahıdakı açar sözlərdən biri ola bilər.");
+        }
 
         if (!ModelState.IsValid)
         {
-            model.ExistingImage = product.Image;
+            model.ExistingImages = GetProductImagePaths(product);
             model.Categories = await _context.Categories.Where(c => c.ParentId == null).Include(c => c.Subcategories).ToListAsync();
             return View(model);
         }
@@ -170,9 +240,11 @@ public class ListingsController : Controller
             Location = model.Location
         };
 
-        if (model.ImageFile != null && model.ImageFile.Length > 0)
+        var newImagePaths = await SaveImagesAsync(model.ImageFiles);
+        if (newImagePaths.Any())
         {
-            request.Image = await SaveImageAsync(model.ImageFile);
+            request.Image = newImagePaths.First();
+            request.ImagesJson = JsonSerializer.Serialize(newImagePaths);
         }
 
         _context.ListingRequests.Add(request);

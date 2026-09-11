@@ -32,8 +32,8 @@ public class EditListingViewModel
     public string? Location { get; set; }
 
     public int? SubcategoryId { get; set; }
-    public string? ExistingImage { get; set; }
-    public IFormFile? ImageFile { get; set; }
+    public List<string> ExistingImages { get; set; } = new();
+    public List<IFormFile>? ImageFiles { get; set; }
 
     public List<Category> Categories { get; set; } = new();
 }

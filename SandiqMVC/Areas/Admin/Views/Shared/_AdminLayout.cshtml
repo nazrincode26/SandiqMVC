@@ -2,6 +2,7 @@
 @inject SandiqMVC.DAL.SandiqMvcDbContext DbContext
 @{
     var pendingRequestCount = await DbContext.ListingRequests.CountAsync(r => r.Status == "pending");
+    var pendingOrderCount = await DbContext.Orders.CountAsync(o => o.Status == "pending");
 }
 <!DOCTYPE html>
 <html lang="az">
@@ -28,6 +29,14 @@
                     }
                 </a>
                 <a asp-area="Admin" asp-controller="Categories" asp-action="Index">Kateqoriyalar</a>
+                <a asp-area="Admin" asp-controller="Orders" asp-action="Index">
+                    Sifarişlər
+                    @if (pendingOrderCount > 0)
+                    {
+                        <span class="admin-nav-badge">@pendingOrderCount</span>
+                    }
+                </a>
+                <a asp-area="Admin" asp-controller="PaymentCards" asp-action="Index">Ödəniş kartları</a>
                 <a asp-controller="Account" asp-action="Logout">Çıxış</a>
             </nav>
         </div>

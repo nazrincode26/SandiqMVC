@@ -77,10 +77,17 @@ if (toggle && panel && closeBtn && titleEl && messagesEl && form && input) {
         thinkingMsg.classList.add("chatbot-msg--thinking");
 
         try {
+            const cart = typeof getCart === "function"
+                ? getCart().map((i) => ({ productId: i.productId, title: i.title, price: i.price, quantity: i.quantity }))
+                : [];
+            const favorites = typeof getFavorites === "function"
+                ? getFavorites().map((i) => ({ productId: i.productId, title: i.title, price: i.price, quantity: 1 }))
+                : [];
+
             const response = await fetch("/Chat/Ask", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ message, lang, history }),
+                body: JSON.stringify({ message, lang, history, cart, favorites }),
             });
 
             if (!response.ok) throw new Error("Request failed");

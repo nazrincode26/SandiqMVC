@@ -5,6 +5,7 @@
 <h2 data-i18n="cart_title">Səbətim</h2>
 <div id="cartItems" class="cart-items"></div>
 <div id="cartTotal" class="cart-total"></div>
+<div id="cartCheckoutAction"></div>
 
 @section Scripts {
     <script type="module">
@@ -13,19 +14,25 @@
         function renderCartPage() {
             const itemsEl = document.getElementById("cartItems");
             const totalEl = document.getElementById("cartTotal");
+            const checkoutEl = document.getElementById("cartCheckoutAction");
             const items = getCart();
 
             if (items.length === 0) {
                 itemsEl.innerHTML = `<p>${t("cart_empty")}</p>`;
                 totalEl.innerHTML = "";
+                checkoutEl.innerHTML = "";
                 return;
             }
+
+            checkoutEl.innerHTML = `<a href="/Cart/Checkout" class="cart-checkout-btn">Sifarişi tamamla</a>`;
 
             itemsEl.innerHTML = items
                 .map(
                     (item) => `
                   <div class="cart-item" data-id="${item.productId}">
-                    <div style="width:80px;height:80px;background:#EFE6D6;border-radius:8px;"></div>
+                    ${item.image
+                        ? `<img src="${item.image}" alt="${item.title}" style="width:80px;height:80px;object-fit:cover;border-radius:8px;" />`
+                        : `<div style="width:80px;height:80px;background:#EFE6D6;border-radius:8px;"></div>`}
                     <div class="cart-item__info">
                       <h3>${item.title}</h3>
                       <p>${formatPrice(item.price)}</p>

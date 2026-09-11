@@ -43,7 +43,8 @@
                         data-categoryid="@product.CategoryId"
                         data-subcategoryid="@product.SubcategoryId"
                         data-condition="@product.Condition"
-                        data-location="@product.Location">
+                        data-location="@product.Location"
+                        data-images="@System.Text.Json.JsonSerializer.Serialize(product.Images.Any() ? product.Images.OrderBy(i => i.SortOrder).Select(i => i.Path) : (!string.IsNullOrEmpty(product.Image) ? new[] { product.Image } : Array.Empty<string>()))">
                     Redaktə et
                 </button>
 
@@ -72,7 +73,7 @@
         <h2 id="modalTitle">Yeni elan</h2>
         <p class="admin-form__subtitle">Elan məlumatlarını doldurun</p>
 
-        <form id="listingForm" method="post">
+        <form id="listingForm" method="post" enctype="multipart/form-data">
             <input type="hidden" name="Id" id="formId" value="0" />
             <section class="admin-form__section">
                 <h3 class="admin-form__section-title">
@@ -130,6 +131,16 @@
                 </div>
             </section>
 
+            <section class="admin-form__section">
+                <h3 class="admin-form__section-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg>
+                    Şəkillər (maksimum @SandiqMVC.Models.Product.MaxImages ədəd)
+                </h3>
+                <p class="admin-form__hint" id="modalImageHint">Yeni şəkil seçsəniz, mövcud şəkillərin yerinə keçəcək.</p>
+                <input type="file" name="ImageFiles" id="formImages" accept="image/*" multiple />
+                <div class="post-ad-previews" id="modalImagePreviews"></div>
+            </section>
+
             <div class="admin-modal__actions">
                 <button type="button" id="modalCancelBtn" class="admin-btn">Ləğv et</button>
                 <button type="submit" class="admin-btn admin-btn--primary">Yadda saxla</button>
@@ -153,6 +164,42 @@
         const formPrice = document.getElementById("formPrice");
         const formCondition = document.getElementById("formCondition");
         const formLocation = document.getElementById("formLocation");
+        const formImages = document.getElementById("formImages");
+        const modalImagePreviews = document.getElementById("modalImagePreviews");
+        const modalImageHint = document.getElementById("modalImageHint");
+        const MAX_IMAGES = @SandiqMVC.Models.Product.MaxImages;
+        let selectedImageFiles = [];
+
+        function syncFormImages() {
+            const dataTransfer = new DataTransfer();
+            selectedImageFiles.forEach((f) => dataTransfer.items.add(f));
+            formImages.files = dataTransfer.files;
+        }
+
+        function renderModalPreviews() {
+            modalImagePreviews.innerHTML = "";
+            selectedImageFiles.forEach((file, index) => {
+                const url = URL.createObjectURL(file);
+                const item = document.createElement("div");
+                item.className = "post-ad-preview";
+                item.innerHTML = `<img src="${url}" alt="${file.name}" /><button type="button" class="post-ad-preview__remove">×</button>`;
+                modalImagePreviews.appendChild(item);
+                item.querySelector(".post-ad-preview__remove").addEventListener("click", () => {
+                    selectedImageFiles.splice(index, 1);
+                    syncFormImages();
+                    renderModalPreviews();
+                });
+            });
+        }
+
+        formImages.addEventListener("change", () => {
+            for (const file of Array.from(formImages.files)) {
+                if (selectedImageFiles.length >= MAX_IMAGES) break;
+                selectedImageFiles.push(file);
+            }
+            syncFormImages();
+            renderModalPreviews();
+        });
 
         const createUrl = "@Url.Action("CreateAdmin", "Listings", new { area = "Admin" })";
         const editUrl = "@Url.Action("EditAdmin", "Listings", new { area = "Admin" })";
@@ -182,6 +229,10 @@
             formPrice.value = "";
             formCondition.value = "used";
             formLocation.value = "";
+            selectedImageFiles = [];
+            syncFormImages();
+            renderModalPreviews();
+            modalImageHint.textContent = "";
             listingForm.action = createUrl;
             listingModal.classList.remove("hidden");
         });
@@ -197,6 +248,16 @@
                 formPrice.value = btn.dataset.price;
                 formCondition.value = btn.dataset.condition ?? "used";
                 formLocation.value = btn.dataset.location ?? "";
+                selectedImageFiles = [];
+                syncFormImages();
+                renderModalPreviews();
+                const existingImages = JSON.parse(btn.dataset.images || "[]");
+                modalImagePreviews.innerHTML = existingImages
+                    .map((src) => `<div class="post-ad-preview"><img src="${src}" alt="" /></div>`)
+                    .join("");
+                modalImageHint.textContent = existingImages.length
+                    ? `Hazırda ${existingImages.length} şəkil var. Yeni şəkil seçsəniz, bunların yerinə keçəcək.`
+                    : "";
                 listingForm.action = editUrl;
                 listingModal.classList.remove("hidden");
             });

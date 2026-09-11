@@ -166,6 +166,7 @@ export const az = {
   filter_condition_label: "Vəziyyət",
   filter_all_conditions: "Hamısı",
   filter_sort_label: "Sırala",
+  sort_alpha: "Əlifba sırası ilə",
   sort_newest: "Ən yeni",
   sort_oldest: "Ən köhnə",
   sort_price_asc: "Qiymət: ucuzdan bahaya",

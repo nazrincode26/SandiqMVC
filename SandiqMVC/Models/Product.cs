@@ -4,6 +4,8 @@ namespace SandiqMVC.Models;
 
 public class Product
 {
+    public const int MaxImages = 10;
+
     public int Id { get; set; }
     public string Title { get; set; } = string.Empty;
     public string? Description { get; set; }
@@ -23,4 +25,5 @@ public class Product
     public DateTime? ApprovedAt { get; set; }
     public int ViewCount { get; set; }
     public List<ProductReview> Reviews { get; set; } = new();
+    public List<ProductImage> Images { get; set; } = new();
 }

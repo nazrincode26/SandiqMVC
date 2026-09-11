@@ -6,7 +6,7 @@ namespace SandiqMVC.ViewModels;
 
 public class CreateListingViewModel
 {
-    public IFormFile? ImageFile { get; set; }
+    public List<IFormFile>? ImageFiles { get; set; }
 
     [Required(ErrorMessage = "Başlıq tələb olunur")]
     [Display(Name = "Başlıq")]
