@@ -33,6 +33,11 @@
     "eslint-config-next": "^16.4.3",
     "typescript": "^6.0.3"
   },
+  "overrides": {
+    "jwks-rsa": {
+      "jose": "5.10.0"
+    }
+  },
   "engines": {
     "node": "24.x"
   }
