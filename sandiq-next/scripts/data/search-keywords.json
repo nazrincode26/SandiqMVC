@@ -1,0 +1,1760 @@
+[
+ {
+  "keyword": "köynək",
+  "lang": "az",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "рубашка",
+  "lang": "ru",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "shirt",
+  "lang": "en",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "şalvar",
+  "lang": "az",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "брюки",
+  "lang": "ru",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "pants",
+  "lang": "en",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "jaket",
+  "lang": "az",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "куртка",
+  "lang": "ru",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "jacket",
+  "lang": "en",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "pencək",
+  "lang": "az",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "пиджак",
+  "lang": "ru",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "blazer",
+  "lang": "en",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "palto",
+  "lang": "az",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "пальто",
+  "lang": "ru",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "coat",
+  "lang": "en",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "gödəkçə",
+  "lang": "az",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "sviter",
+  "lang": "az",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "свитер",
+  "lang": "ru",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "sweater",
+  "lang": "en",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "kofta",
+  "lang": "az",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "кофта",
+  "lang": "ru",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "cardigan",
+  "lang": "en",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "tişört",
+  "lang": "az",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "футболка",
+  "lang": "ru",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "t-shirt",
+  "lang": "en",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "ayaqqabı",
+  "lang": "az",
+  "categoryIds": [
+   13,
+   14,
+   15
+  ]
+ },
+ {
+  "keyword": "обувь",
+  "lang": "ru",
+  "categoryIds": [
+   13,
+   14,
+   15
+  ]
+ },
+ {
+  "keyword": "shoes",
+  "lang": "en",
+  "categoryIds": [
+   13,
+   14,
+   15
+  ]
+ },
+ {
+  "keyword": "botinka",
+  "lang": "az",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "ботинки",
+  "lang": "ru",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "boots",
+  "lang": "en",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "krossovka",
+  "lang": "az",
+  "categoryIds": [
+   13,
+   14,
+   15
+  ]
+ },
+ {
+  "keyword": "кроссовки",
+  "lang": "ru",
+  "categoryIds": [
+   13,
+   14,
+   15
+  ]
+ },
+ {
+  "keyword": "sneakers",
+  "lang": "en",
+  "categoryIds": [
+   13,
+   14,
+   15
+  ]
+ },
+ {
+  "keyword": "corab",
+  "lang": "az",
+  "categoryIds": [
+   13,
+   14,
+   15,
+   21
+  ]
+ },
+ {
+  "keyword": "носки",
+  "lang": "ru",
+  "categoryIds": [
+   13,
+   14,
+   15
+  ]
+ },
+ {
+  "keyword": "socks",
+  "lang": "en",
+  "categoryIds": [
+   13,
+   14,
+   15
+  ]
+ },
+ {
+  "keyword": "papaq",
+  "lang": "az",
+  "categoryIds": [
+   13,
+   14,
+   15
+  ]
+ },
+ {
+  "keyword": "şapka",
+  "lang": "az",
+  "categoryIds": [
+   13,
+   14,
+   15
+  ]
+ },
+ {
+  "keyword": "шапка",
+  "lang": "ru",
+  "categoryIds": [
+   13,
+   14,
+   15
+  ]
+ },
+ {
+  "keyword": "hat",
+  "lang": "en",
+  "categoryIds": [
+   13,
+   14,
+   15
+  ]
+ },
+ {
+  "keyword": "şərf",
+  "lang": "az",
+  "categoryIds": [
+   13,
+   14,
+   21
+  ]
+ },
+ {
+  "keyword": "шарф",
+  "lang": "ru",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "scarf",
+  "lang": "en",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "əlcək",
+  "lang": "az",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "перчатки",
+  "lang": "ru",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "gloves",
+  "lang": "en",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "qurşaq",
+  "lang": "az",
+  "categoryIds": [
+   13,
+   14,
+   16
+  ]
+ },
+ {
+  "keyword": "ремень",
+  "lang": "ru",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "belt",
+  "lang": "en",
+  "categoryIds": [
+   13,
+   14
+  ]
+ },
+ {
+  "keyword": "geyim",
+  "lang": "az",
+  "categoryIds": [
+   13,
+   14,
+   15
+  ]
+ },
+ {
+  "keyword": "одежда",
+  "lang": "ru",
+  "categoryIds": [
+   13,
+   14,
+   15
+  ]
+ },
+ {
+  "keyword": "clothes",
+  "lang": "en",
+  "categoryIds": [
+   13,
+   14,
+   15
+  ]
+ },
+ {
+  "keyword": "kostyum",
+  "lang": "az",
+  "categoryIds": [
+   13
+  ]
+ },
+ {
+  "keyword": "костюм",
+  "lang": "ru",
+  "categoryIds": [
+   13
+  ]
+ },
+ {
+  "keyword": "suit",
+  "lang": "en",
+  "categoryIds": [
+   13
+  ]
+ },
+ {
+  "keyword": "qalstuk",
+  "lang": "az",
+  "categoryIds": [
+   13
+  ]
+ },
+ {
+  "keyword": "галстук",
+  "lang": "ru",
+  "categoryIds": [
+   13
+  ]
+ },
+ {
+  "keyword": "tie",
+  "lang": "en",
+  "categoryIds": [
+   13
+  ]
+ },
+ {
+  "keyword": "kişi köynəyi",
+  "lang": "az",
+  "categoryIds": [
+   13
+  ]
+ },
+ {
+  "keyword": "don",
+  "lang": "az",
+  "categoryIds": [
+   14
+  ]
+ },
+ {
+  "keyword": "paltar",
+  "lang": "az",
+  "categoryIds": [
+   14
+  ]
+ },
+ {
+  "keyword": "платье",
+  "lang": "ru",
+  "categoryIds": [
+   14
+  ]
+ },
+ {
+  "keyword": "dress",
+  "lang": "en",
+  "categoryIds": [
+   14
+  ]
+ },
+ {
+  "keyword": "yubka",
+  "lang": "az",
+  "categoryIds": [
+   14
+  ]
+ },
+ {
+  "keyword": "юбка",
+  "lang": "ru",
+  "categoryIds": [
+   14
+  ]
+ },
+ {
+  "keyword": "skirt",
+  "lang": "en",
+  "categoryIds": [
+   14
+  ]
+ },
+ {
+  "keyword": "bluzka",
+  "lang": "az",
+  "categoryIds": [
+   14
+  ]
+ },
+ {
+  "keyword": "блузка",
+  "lang": "ru",
+  "categoryIds": [
+   14
+  ]
+ },
+ {
+  "keyword": "blouse",
+  "lang": "en",
+  "categoryIds": [
+   14
+  ]
+ },
+ {
+  "keyword": "gəlinlik",
+  "lang": "az",
+  "categoryIds": [
+   14
+  ]
+ },
+ {
+  "keyword": "свадебное платье",
+  "lang": "ru",
+  "categoryIds": [
+   14
+  ]
+ },
+ {
+  "keyword": "wedding dress",
+  "lang": "en",
+  "categoryIds": [
+   14
+  ]
+ },
+ {
+  "keyword": "sumka",
+  "lang": "az",
+  "categoryIds": [
+   14,
+   16
+  ]
+ },
+ {
+  "keyword": "сумка",
+  "lang": "ru",
+  "categoryIds": [
+   14
+  ]
+ },
+ {
+  "keyword": "bag",
+  "lang": "en",
+  "categoryIds": [
+   14
+  ]
+ },
+ {
+  "keyword": "alt paltarı",
+  "lang": "az",
+  "categoryIds": [
+   14,
+   13
+  ]
+ },
+ {
+  "keyword": "бельё",
+  "lang": "ru",
+  "categoryIds": [
+   14,
+   13
+  ]
+ },
+ {
+  "keyword": "underwear",
+  "lang": "en",
+  "categoryIds": [
+   14,
+   13
+  ]
+ },
+ {
+  "keyword": "uşaq geyimi",
+  "lang": "az",
+  "categoryIds": [
+   15
+  ]
+ },
+ {
+  "keyword": "детская одежда",
+  "lang": "ru",
+  "categoryIds": [
+   15
+  ]
+ },
+ {
+  "keyword": "kids clothing",
+  "lang": "en",
+  "categoryIds": [
+   15
+  ]
+ },
+ {
+  "keyword": "körpə geyimi",
+  "lang": "az",
+  "categoryIds": [
+   15
+  ]
+ },
+ {
+  "keyword": "одежда для малышей",
+  "lang": "ru",
+  "categoryIds": [
+   15
+  ]
+ },
+ {
+  "keyword": "baby clothes",
+  "lang": "en",
+  "categoryIds": [
+   15
+  ]
+ },
+ {
+  "keyword": "kombinzon",
+  "lang": "az",
+  "categoryIds": [
+   15
+  ]
+ },
+ {
+  "keyword": "комбинезон",
+  "lang": "ru",
+  "categoryIds": [
+   15
+  ]
+ },
+ {
+  "keyword": "onesie",
+  "lang": "en",
+  "categoryIds": [
+   15
+  ]
+ },
+ {
+  "keyword": "uşaq ayaqqabısı",
+  "lang": "az",
+  "categoryIds": [
+   15
+  ]
+ },
+ {
+  "keyword": "детская обувь",
+  "lang": "ru",
+  "categoryIds": [
+   15
+  ]
+ },
+ {
+  "keyword": "kids shoes",
+  "lang": "en",
+  "categoryIds": [
+   15
+  ]
+ },
+ {
+  "keyword": "eynək",
+  "lang": "az",
+  "categoryIds": [
+   16
+  ]
+ },
+ {
+  "keyword": "очки",
+  "lang": "ru",
+  "categoryIds": [
+   16
+  ]
+ },
+ {
+  "keyword": "glasses",
+  "lang": "en",
+  "categoryIds": [
+   16
+  ]
+ },
+ {
+  "keyword": "zinət əşyaları",
+  "lang": "az",
+  "categoryIds": [
+   16
+  ]
+ },
+ {
+  "keyword": "bijuteriya",
+  "lang": "az",
+  "categoryIds": [
+   16
+  ]
+ },
+ {
+  "keyword": "бижутерия",
+  "lang": "ru",
+  "categoryIds": [
+   16
+  ]
+ },
+ {
+  "keyword": "jewelry",
+  "lang": "en",
+  "categoryIds": [
+   16
+  ]
+ },
+ {
+  "keyword": "mebel",
+  "lang": "az",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "мебель",
+  "lang": "ru",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "furniture",
+  "lang": "en",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "divan",
+  "lang": "az",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "диван",
+  "lang": "ru",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "sofa",
+  "lang": "en",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "şkaf",
+  "lang": "az",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "шкаф",
+  "lang": "ru",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "wardrobe",
+  "lang": "en",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "xalça",
+  "lang": "az",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "ковёр",
+  "lang": "ru",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "carpet",
+  "lang": "en",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "soyuducu",
+  "lang": "az",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "холодильник",
+  "lang": "ru",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "fridge",
+  "lang": "en",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "paltaryuyan",
+  "lang": "az",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "стиральная машина",
+  "lang": "ru",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "washing machine",
+  "lang": "en",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "televizor",
+  "lang": "az",
+  "categoryIds": [
+   17,
+   18
+  ]
+ },
+ {
+  "keyword": "телевизор",
+  "lang": "ru",
+  "categoryIds": [
+   17,
+   18
+  ]
+ },
+ {
+  "keyword": "tv",
+  "lang": "en",
+  "categoryIds": [
+   17,
+   18
+  ]
+ },
+ {
+  "keyword": "yataq",
+  "lang": "az",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "кровать",
+  "lang": "ru",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "bed",
+  "lang": "en",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "masa",
+  "lang": "az",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "стол",
+  "lang": "ru",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "table",
+  "lang": "en",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "stul",
+  "lang": "az",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "стул",
+  "lang": "ru",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "chair",
+  "lang": "en",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "kondisioner",
+  "lang": "az",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "кондиционер",
+  "lang": "ru",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "air conditioner",
+  "lang": "en",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "velosiped",
+  "lang": "az",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "велосипед",
+  "lang": "ru",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "bicycle",
+  "lang": "en",
+  "categoryIds": [
+   17
+  ]
+ },
+ {
+  "keyword": "güzgü",
+  "lang": "az",
+  "categoryIds": [
+   17,
+   19
+  ]
+ },
+ {
+  "keyword": "зеркало",
+  "lang": "ru",
+  "categoryIds": [
+   17,
+   19
+  ]
+ },
+ {
+  "keyword": "mirror",
+  "lang": "en",
+  "categoryIds": [
+   17,
+   19
+  ]
+ },
+ {
+  "keyword": "telefon",
+  "lang": "az",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "телефон",
+  "lang": "ru",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "phone",
+  "lang": "en",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "noutbuk",
+  "lang": "az",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "ноутбук",
+  "lang": "ru",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "laptop",
+  "lang": "en",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "kompüter",
+  "lang": "az",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "компьютер",
+  "lang": "ru",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "computer",
+  "lang": "en",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "planşet",
+  "lang": "az",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "планшет",
+  "lang": "ru",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "tablet",
+  "lang": "en",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "qulaqlıq",
+  "lang": "az",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "наушники",
+  "lang": "ru",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "headphones",
+  "lang": "en",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "oyuncaq",
+  "lang": "az",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "игрушка",
+  "lang": "ru",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "toy",
+  "lang": "en",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "kitab",
+  "lang": "az",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "книга",
+  "lang": "ru",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "book",
+  "lang": "en",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "lampa",
+  "lang": "az",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "лампа",
+  "lang": "ru",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "lamp",
+  "lang": "en",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "saat",
+  "lang": "az",
+  "categoryIds": [
+   18,
+   16
+  ]
+ },
+ {
+  "keyword": "часы",
+  "lang": "ru",
+  "categoryIds": [
+   18,
+   16
+  ]
+ },
+ {
+  "keyword": "watch",
+  "lang": "en",
+  "categoryIds": [
+   18,
+   16
+  ]
+ },
+ {
+  "keyword": "oyun konsolu",
+  "lang": "az",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "игровая консоль",
+  "lang": "ru",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "game console",
+  "lang": "en",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "fen",
+  "lang": "az",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "фен",
+  "lang": "ru",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "hair dryer",
+  "lang": "en",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "ütü",
+  "lang": "az",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "утюг",
+  "lang": "ru",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "iron",
+  "lang": "en",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "kamera",
+  "lang": "az",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "камера",
+  "lang": "ru",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "camera",
+  "lang": "en",
+  "categoryIds": [
+   18
+  ]
+ },
+ {
+  "keyword": "dekorasiya",
+  "lang": "az",
+  "categoryIds": [
+   19
+  ]
+ },
+ {
+  "keyword": "декор",
+  "lang": "ru",
+  "categoryIds": [
+   19
+  ]
+ },
+ {
+  "keyword": "decoration",
+  "lang": "en",
+  "categoryIds": [
+   19
+  ]
+ },
+ {
+  "keyword": "qab",
+  "lang": "az",
+  "categoryIds": [
+   9
+  ]
+ },
+ {
+  "keyword": "посуда",
+  "lang": "ru",
+  "categoryIds": [
+   9
+  ]
+ },
+ {
+  "keyword": "dishware",
+  "lang": "en",
+  "categoryIds": [
+   9
+  ]
+ },
+ {
+  "keyword": "boşqab",
+  "lang": "az",
+  "categoryIds": [
+   9
+  ]
+ },
+ {
+  "keyword": "тарелка",
+  "lang": "ru",
+  "categoryIds": [
+   9
+  ]
+ },
+ {
+  "keyword": "plate",
+  "lang": "en",
+  "categoryIds": [
+   9
+  ]
+ },
+ {
+  "keyword": "stəkan",
+  "lang": "az",
+  "categoryIds": [
+   9
+  ]
+ },
+ {
+  "keyword": "стакан",
+  "lang": "ru",
+  "categoryIds": [
+   9
+  ]
+ },
+ {
+  "keyword": "glass",
+  "lang": "en",
+  "categoryIds": [
+   9
+  ]
+ },
+ {
+  "keyword": "qazan",
+  "lang": "az",
+  "categoryIds": [
+   9
+  ]
+ },
+ {
+  "keyword": "кастрюля",
+  "lang": "ru",
+  "categoryIds": [
+   9
+  ]
+ },
+ {
+  "keyword": "pot",
+  "lang": "en",
+  "categoryIds": [
+   9
+  ]
+ },
+ {
+  "keyword": "tava",
+  "lang": "az",
+  "categoryIds": [
+   9
+  ]
+ },
+ {
+  "keyword": "сковорода",
+  "lang": "ru",
+  "categoryIds": [
+   9
+  ]
+ },
+ {
+  "keyword": "pan",
+  "lang": "en",
+  "categoryIds": [
+   9
+  ]
+ },
+ {
+  "keyword": "çaydan",
+  "lang": "az",
+  "categoryIds": [
+   9
+  ]
+ },
+ {
+  "keyword": "чайник",
+  "lang": "ru",
+  "categoryIds": [
+   9
+  ]
+ },
+ {
+  "keyword": "kettle",
+  "lang": "en",
+  "categoryIds": [
+   9
+  ]
+ },
+ {
+  "keyword": "bıçaq dəsti",
+  "lang": "az",
+  "categoryIds": [
+   9
+  ]
+ },
+ {
+  "keyword": "набор ножей",
+  "lang": "ru",
+  "categoryIds": [
+   9
+  ]
+ },
+ {
+  "keyword": "knife set",
+  "lang": "en",
+  "categoryIds": [
+   9
+  ]
+ },
+ {
+  "keyword": "termos",
+  "lang": "az",
+  "categoryIds": [
+   9
+  ]
+ },
+ {
+  "keyword": "термос",
+  "lang": "ru",
+  "categoryIds": [
+   9
+  ]
+ },
+ {
+  "keyword": "thermos",
+  "lang": "en",
+  "categoryIds": [
+   9
+  ]
+ },
+ {
+  "keyword": "mətbəx ləvazimatı",
+  "lang": "az",
+  "categoryIds": [
+   9
+  ]
+ },
+ {
+  "keyword": "кухонные принадлежности",
+  "lang": "ru",
+  "categoryIds": [
+   9
+  ]
+ },
+ {
+  "keyword": "kitchen utensils",
+  "lang": "en",
+  "categoryIds": [
+   9
+  ]
+ },
+ {
+  "keyword": "mürəbbə",
+  "lang": "az",
+  "categoryIds": [
+   10
+  ]
+ },
+ {
+  "keyword": "варенье",
+  "lang": "ru",
+  "categoryIds": [
+   10
+  ]
+ },
+ {
+  "keyword": "jam",
+  "lang": "en",
+  "categoryIds": [
+   10
+  ]
+ },
+ {
+  "keyword": "turşu",
+  "lang": "az",
+  "categoryIds": [
+   10
+  ]
+ },
+ {
+  "keyword": "соленья",
+  "lang": "ru",
+  "categoryIds": [
+   10
+  ]
+ },
+ {
+  "keyword": "pickles",
+  "lang": "en",
+  "categoryIds": [
+   10
+  ]
+ },
+ {
+  "keyword": "bal",
+  "lang": "az",
+  "categoryIds": [
+   10
+  ]
+ },
+ {
+  "keyword": "мёд",
+  "lang": "ru",
+  "categoryIds": [
+   10
+  ]
+ },
+ {
+  "keyword": "honey",
+  "lang": "en",
+  "categoryIds": [
+   10
+  ]
+ },
+ {
+  "keyword": "konserv",
+  "lang": "az",
+  "categoryIds": [
+   10
+  ]
+ },
+ {
+  "keyword": "консервы",
+  "lang": "ru",
+  "categoryIds": [
+   10
+  ]
+ },
+ {
+  "keyword": "canned food",
+  "lang": "en",
+  "categoryIds": [
+   10
+  ]
+ },
+ {
+  "keyword": "ev yeməyi",
+  "lang": "az",
+  "categoryIds": [
+   10
+  ]
+ },
+ {
+  "keyword": "домашняя еда",
+  "lang": "ru",
+  "categoryIds": [
+   10
+  ]
+ },
+ {
+  "keyword": "homemade food",
+  "lang": "en",
+  "categoryIds": [
+   10
+  ]
+ },
+ {
+  "keyword": "muncuq",
+  "lang": "az",
+  "categoryIds": [
+   20
+  ]
+ },
+ {
+  "keyword": "бусы",
+  "lang": "ru",
+  "categoryIds": [
+   20
+  ]
+ },
+ {
+  "keyword": "beads",
+  "lang": "en",
+  "categoryIds": [
+   20
+  ]
+ },
+ {
+  "keyword": "bilərzik",
+  "lang": "az",
+  "categoryIds": [
+   20
+  ]
+ },
+ {
+  "keyword": "браслет",
+  "lang": "ru",
+  "categoryIds": [
+   20
+  ]
+ },
+ {
+  "keyword": "bracelet",
+  "lang": "en",
+  "categoryIds": [
+   20
+  ]
+ },
+ {
+  "keyword": "boyunbağı",
+  "lang": "az",
+  "categoryIds": [
+   20
+  ]
+ },
+ {
+  "keyword": "колье",
+  "lang": "ru",
+  "categoryIds": [
+   20
+  ]
+ },
+ {
+  "keyword": "necklace",
+  "lang": "en",
+  "categoryIds": [
+   20
+  ]
+ },
+ {
+  "keyword": "toxuma",
+  "lang": "az",
+  "categoryIds": [
+   21
+  ]
+ },
+ {
+  "keyword": "вязание",
+  "lang": "ru",
+  "categoryIds": [
+   21
+  ]
+ },
+ {
+  "keyword": "knitting",
+  "lang": "en",
+  "categoryIds": [
+   21
+  ]
+ },
+ {
+  "keyword": "toxunmuş papaq",
+  "lang": "az",
+  "categoryIds": [
+   21
+  ]
+ },
+ {
+  "keyword": "вязаная шапка",
+  "lang": "ru",
+  "categoryIds": [
+   21
+  ]
+ },
+ {
+  "keyword": "knitted hat",
+  "lang": "en",
+  "categoryIds": [
+   21
+  ]
+ },
+ {
+  "keyword": "əl işi",
+  "lang": "az",
+  "categoryIds": [
+   22
+  ]
+ },
+ {
+  "keyword": "рукоделие",
+  "lang": "ru",
+  "categoryIds": [
+   22
+  ]
+ },
+ {
+  "keyword": "handicraft",
+  "lang": "en",
+  "categoryIds": [
+   22
+  ]
+ }
+]
